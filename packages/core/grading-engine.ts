@@ -73,6 +73,7 @@ Grade this submission according to the rubric and your grading standards.`;
     userPrompt,
     temperature: 0.1,
     maxTokens: 1024,
+    taskType: "grading",
   });
 
   let parsed: { score: number; pass: boolean; feedback: string };

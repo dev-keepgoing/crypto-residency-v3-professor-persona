@@ -10,6 +10,7 @@ import { generateLesson } from "../../packages/core/professor-engine";
 import { commitFiles } from "../../packages/github/github-client";
 import { routeTask } from "../../packages/core/model-router";
 import { callOpenAI } from "../../packages/llm/openai-client";
+import { runPreflight, assertPreflight } from "../../packages/core/preflight";
 import { ResidencyState, HistoryEntry } from "../../packages/core/types";
 
 function dayLabel(day: number): string {
@@ -32,6 +33,7 @@ async function generateSummary(
       `Committed to GitHub: ${commitUrl}. Status: ASSIGNED.`,
     temperature: 0.3,
     maxTokens: 200,
+    taskType: "summary",
   });
 }
 
@@ -39,6 +41,10 @@ async function run(): Promise<void> {
   console.log("═══════════════════════════════════════════════════════════");
   console.log("  AUTONOMOUS CRYPTOGRAPHIC RESIDENCY ENGINE");
   console.log("═══════════════════════════════════════════════════════════\n");
+
+  // ── 0. Preflight Checks ──────────────────────────────────────────────────
+  const preflight = await runPreflight();
+  assertPreflight(preflight);
 
   // ── 1. Load State ────────────────────────────────────────────────────────
   const state: ResidencyState = loadState();

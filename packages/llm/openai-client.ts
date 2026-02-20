@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { OpenAICallParams } from "../core/types";
+import { logUsage } from "../core/usage-logger";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
@@ -22,7 +23,7 @@ async function sleep(ms: number): Promise<void> {
 }
 
 export async function callOpenAI(params: OpenAICallParams): Promise<string> {
-  const { model, systemPrompt, userPrompt, temperature, maxTokens = 4096 } = params;
+  const { model, systemPrompt, userPrompt, temperature, maxTokens = 4096, taskType } = params;
   const client = getClient();
 
   let lastError: Error | null = null;
@@ -44,6 +45,20 @@ export async function callOpenAI(params: OpenAICallParams): Promise<string> {
       const content = response.choices[0]?.message?.content;
       if (!content) {
         throw new Error("OpenAI returned empty content.");
+      }
+
+      // ── Log token usage ────────────────────────────────────────────────────
+      if (taskType && response.usage) {
+        const cachedTokens =
+          (response.usage as unknown as { prompt_tokens_details?: { cached_tokens?: number } })
+            .prompt_tokens_details?.cached_tokens ?? 0;
+
+        logUsage(taskType, model, {
+          promptTokens: response.usage.prompt_tokens,
+          cachedTokens,
+          completionTokens: response.usage.completion_tokens,
+          totalTokens: response.usage.total_tokens,
+        });
       }
 
       return content.trim();

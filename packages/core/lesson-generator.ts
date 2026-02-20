@@ -84,6 +84,7 @@ export async function generateLessonContent(
 This lesson is part of an intensive cryptography residency. The student is expected to achieve mastery.`,
     temperature: 0.2,
     maxTokens: 4096,
+    taskType: "lesson",
   });
 
   // Generate homework.md
@@ -93,6 +94,7 @@ This lesson is part of an intensive cryptography residency. The student is expec
     userPrompt: `Based on the following lesson on "${topic}", generate the homework assignment:\n\n${lessonContent}`,
     temperature: 0.2,
     maxTokens: 2048,
+    taskType: "lesson",
   });
 
   // Generate rubric.md
@@ -102,6 +104,7 @@ This lesson is part of an intensive cryptography residency. The student is expec
     userPrompt: `Based on the following homework assignment, generate the grading rubric:\n\n${homeworkContent}`,
     temperature: 0.2,
     maxTokens: 2048,
+    taskType: "lesson",
   });
 
   return {

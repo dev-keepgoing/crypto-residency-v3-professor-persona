@@ -104,4 +104,5 @@ export interface OpenAICallParams {
   userPrompt: string;
   temperature: number;
   maxTokens?: number;
+  taskType?: TaskType;
 }
