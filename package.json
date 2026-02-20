@@ -1,0 +1,22 @@
+{
+  "name": "crypto-residency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Autonomous Cryptographic Residency Engine",
+  "scripts": {
+    "day:run": "ts-node -r tsconfig-paths/register --project tsconfig.json apps/orchestrator/index.ts",
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "openai": "^4.52.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.5.3"
+  }
+}

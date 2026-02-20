@@ -1,0 +1,62 @@
+# ----------------------------
+# Node
+# ----------------------------
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ----------------------------
+# Build output
+# ----------------------------
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# ----------------------------
+# Environment variables
+# ----------------------------
+.env
+.env.*
+!.env.example
+
+# ----------------------------
+# Logs
+# ----------------------------
+logs/
+*.log
+
+# ----------------------------
+# OS files
+# ----------------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------------
+# IDE / Editor
+# ----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------------
+# Firebase (when added)
+# ----------------------------
+.firebase/
+firebase-debug.log
+
+# ----------------------------
+# Local runtime data
+# ----------------------------
+.residency-cache/
+.residency-temp/
+
+# ----------------------------
+# Misc
+# ----------------------------
+*.pem
+*.key
+*.crt

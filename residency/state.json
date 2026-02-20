@@ -1,0 +1,9 @@
+{
+  "currentDay": 1,
+  "currentLessonId": "FF-001",
+  "attempt": 1,
+  "status": "NOT_STARTED",
+  "professor": "euclid",
+  "lastCommitSha": null,
+  "history": []
+}
