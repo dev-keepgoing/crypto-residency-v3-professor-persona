@@ -1,6 +1,10 @@
-import { GenerateLessonParams, GeneratedLesson } from "./types";
+/**
+ * Professor engine: given day/topic/professorId/attempt, loads the persona
+ * and delegates to the lesson generator to produce lesson, homework, and rubric.
+ */
+import { GenerateLessonParams, GeneratedLesson } from "../types";
 import { getProfessorPersona } from "./professor-personas";
-import { generateLessonContent } from "./lesson-generator";
+import { generateLessonContent } from "../lesson";
 
 export async function generateLesson(params: GenerateLessonParams): Promise<GeneratedLesson> {
   const { professorId, day, topic, attempt } = params;

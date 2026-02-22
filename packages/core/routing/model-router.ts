@@ -1,4 +1,8 @@
-import { TaskType } from "./types";
+/**
+ * Model router: maps task type (lesson, grading, summary, orchestration) to the OpenAI model name
+ * used for that task (e.g. gpt-5.2 for lesson/grading, gpt-5-mini for summary/orchestration).
+ */
+import { TaskType } from "../types";
 
 const MODEL_ROUTING_TABLE: Record<TaskType, string> = {
   lesson: "gpt-5.2",

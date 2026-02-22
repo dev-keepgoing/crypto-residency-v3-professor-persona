@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Professor Engine Homework Specs",
+  "type": "object",
+  "required": ["curriculumId", "version", "generatedAt", "source", "days"],
+  "properties": {
+    "curriculumId": { "type": "string" },
+    "version": { "type": "string" },
+    "generatedAt": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string" },
+        "curriculumVersion": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "days": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["day", "lessonId", "topic", "objectives", "constraints", "rubric"],
+        "properties": {
+          "day": { "type": "integer", "minimum": 1 },
+          "lessonId": { "type": "string" },
+          "topic": { "type": "string" },
+          "moduleId": { "type": "string" },
+          "moduleName": { "type": "string" },
+          "difficulty": { "type": "integer", "minimum": 1 },
+          "passScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "objectives": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["id", "category", "text"],
+              "properties": {
+                "id": { "type": "string" },
+                "category": {
+                  "type": "string",
+                  "enum": [
+                    "concept",
+                    "derivation",
+                    "computation",
+                    "implementation",
+                    "adversarial",
+                    "review"
+                  ]
+                },
+                "text": { "type": "string" }
+              },
+              "additionalProperties": true
+            }
+          },
+          "constraints": {
+            "type": "object",
+            "properties": {
+              "timeboxMinutes": { "type": "integer", "minimum": 1 },
+              "problemCounts": {
+                "type": "object",
+                "required": ["math", "implementation", "adversarial"],
+                "properties": {
+                  "math": { "type": "integer", "minimum": 0 },
+                  "implementation": { "type": "integer", "minimum": 0 },
+                  "adversarial": { "type": "integer", "minimum": 0 }
+                },
+                "additionalProperties": false
+              },
+              "allowedLanguages": { "type": "array", "items": { "type": "string" } },
+              "allowedResources": { "type": "array", "items": { "type": "string" } },
+              "disallowedResources": { "type": "array", "items": { "type": "string" } },
+              "responseFormat": {
+                "type": "object",
+                "properties": {
+                  "requireMarkdown": { "type": "boolean" },
+                  "requireLatex": { "type": "boolean" },
+                  "requireCodeFences": { "type": "boolean" }
+                },
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": true
+          },
+          "rubric": {
+            "type": "object",
+            "required": ["totalPoints", "passingScore", "dimensions", "masteryGate"],
+            "properties": {
+              "totalPoints": { "type": "integer", "const": 100 },
+              "passingScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "masteryGate": { "type": "string" },
+              "dimensions": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["id", "name", "points", "minimumPoints"],
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "points": { "type": "integer", "minimum": 0, "maximum": 100 },
+                    "minimumPoints": { "type": "integer", "minimum": 0, "maximum": 100 }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

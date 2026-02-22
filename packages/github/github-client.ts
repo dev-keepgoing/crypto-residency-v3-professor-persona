@@ -1,3 +1,7 @@
+/**
+ * GitHub client: commits files to the repo via REST API (blob → tree → commit → ref update).
+ * Uses GITHUB_PAT, GITHUB_OWNER, GITHUB_REPO. No local git CLI; pushes to main.
+ */
 import axios, { AxiosInstance } from "axios";
 import { CommitFile, CommitResult } from "../core/types";
 

@@ -1,3 +1,9 @@
+/**
+ * Shared TypeScript types and interfaces for the residency engine:
+ * lesson status, professor personas, curriculum, state, lesson generation,
+ * grading, GitHub commits, model routing, and OpenAI client params.
+ */
+
 // ─── Lesson Status ───────────────────────────────────────────────────────────
 
 export type LessonStatus =
@@ -27,6 +33,81 @@ export interface CurriculumLesson {
   day: number;
   topic: string;
   defaultProfessorId: string;
+  difficulty?: number;
+  passScore?: number;
+}
+
+// ─── Governed Specs (Structured Inputs) ─────────────────────────────────────
+
+export type ObjectiveCategory =
+  | "concept"
+  | "derivation"
+  | "computation"
+  | "implementation"
+  | "adversarial"
+  | "review";
+
+export interface GovernedObjective {
+  id: string;
+  category: ObjectiveCategory;
+  text: string;
+}
+
+export interface GovernedProblemCounts {
+  math: number;
+  implementation: number;
+  adversarial: number;
+}
+
+export interface GovernedConstraints {
+  timeboxMinutes?: number;
+  problemCounts?: GovernedProblemCounts;
+  allowedLanguages?: string[];
+  allowedResources?: string[];
+  disallowedResources?: string[];
+  responseFormat?: {
+    requireMarkdown?: boolean;
+    requireLatex?: boolean;
+    requireCodeFences?: boolean;
+  };
+}
+
+export interface GovernedRubricDimension {
+  id: string;
+  name: string;
+  points: number;
+  minimumPoints: number;
+}
+
+export interface GovernedRubricSpec {
+  totalPoints: number;
+  passingScore: number;
+  dimensions: GovernedRubricDimension[];
+  masteryGate: string;
+}
+
+export interface StructuredInputsDay {
+  day: number;
+  lessonId: string;
+  topic: string;
+  moduleId?: string;
+  moduleName?: string;
+  difficulty?: number;
+  passScore?: number;
+  objectives: GovernedObjective[];
+  constraints: GovernedConstraints;
+  rubric: GovernedRubricSpec;
+}
+
+export interface StructuredInputsFile {
+  curriculumId: string;
+  version: string;
+  generatedAt: string;
+  source: {
+    path: string;
+    curriculumVersion?: string;
+  };
+  days: StructuredInputsDay[];
 }
 
 // ─── Residency State ─────────────────────────────────────────────────────────

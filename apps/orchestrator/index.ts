@@ -5,10 +5,10 @@ import path from "path";
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 import { loadState, saveState, appendStateSummary, pushHistoryEntry } from "../../packages/core/state";
-import { getLessonByDay } from "../../packages/core/curriculum";
-import { generateLesson } from "../../packages/core/professor-engine";
+import { getLessonByDay, isResidencyComplete, getLastCurriculumDay } from "../../packages/core/curriculum";
+import { generateLesson } from "../../packages/core/personas";
 import { commitFiles } from "../../packages/github/github-client";
-import { routeTask } from "../../packages/core/model-router";
+import { routeTask } from "../../packages/core/routing";
 import { callOpenAI } from "../../packages/llm/openai-client";
 import { runPreflight, assertPreflight } from "../../packages/core/preflight";
 import { ResidencyState, HistoryEntry } from "../../packages/core/types";
@@ -62,7 +62,16 @@ async function run(): Promise<void> {
     process.exit(0);
   }
 
-  // ── 3. Resolve curriculum lesson ─────────────────────────────────────────
+  // ── 3. Resolve curriculum lesson (or exit if residency complete) ────────
+  if (isResidencyComplete(state.currentDay)) {
+    const lastDay = getLastCurriculumDay();
+    console.log(
+      `[Orchestrator] Residency complete — no lesson for Day ${state.currentDay}.\n` +
+        `  Curriculum has ${lastDay} day(s). Nothing left to run.\n`
+    );
+    process.exit(0);
+  }
+
   const curriculumLesson = getLessonByDay(state.currentDay);
   if (!curriculumLesson) {
     throw new Error(`No curriculum lesson found for Day ${state.currentDay}`);

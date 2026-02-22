@@ -1,6 +1,10 @@
+/**
+ * Residency state machine: load/save state.json, append to state.md,
+ * and helpers for history. Tracks current day, lesson, status, attempt, professor, and commit SHA.
+ */
 import fs from "fs";
 import path from "path";
-import { ResidencyState, HistoryEntry } from "./types";
+import { ResidencyState, HistoryEntry } from "../types";
 
 const STATE_PATH = path.resolve(process.cwd(), "residency", "state.json");
 const STATE_MD_PATH = path.resolve(process.cwd(), "residency", "state.md");

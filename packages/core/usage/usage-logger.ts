@@ -1,9 +1,10 @@
+/**
+ * Usage logger: records every OpenAI call (task type, model, tokens) in residency/usage.json,
+ * computes cost from the pricing table, and rewrites residency/usage.md with a table and totals.
+ */
 import fs from "fs";
 import path from "path";
-import { TaskType } from "./types";
-
-// ─── Pricing Table ────────────────────────────────────────────────────────────
-// Matches docs/pricing.md — update both if pricing changes.
+import { TaskType } from "../types";
 
 interface ModelPricing {
   inputPerM: number;
@@ -12,24 +13,10 @@ interface ModelPricing {
 }
 
 const PRICING: Record<string, ModelPricing> = {
-  "gpt-5.2": {
-    inputPerM: 1.75,
-    cachedInputPerM: 0.175,
-    outputPerM: 14.0,
-  },
-  "gpt-5.2-pro": {
-    inputPerM: 21.0,
-    cachedInputPerM: null,
-    outputPerM: 168.0,
-  },
-  "gpt-5-mini": {
-    inputPerM: 0.25,
-    cachedInputPerM: 0.025,
-    outputPerM: 2.0,
-  },
+  "gpt-5.2": { inputPerM: 1.75, cachedInputPerM: 0.175, outputPerM: 14.0 },
+  "gpt-5.2-pro": { inputPerM: 21.0, cachedInputPerM: null, outputPerM: 168.0 },
+  "gpt-5-mini": { inputPerM: 0.25, cachedInputPerM: 0.025, outputPerM: 2.0 },
 };
-
-// ─── Task → Logical Model ─────────────────────────────────────────────────────
 
 const TASK_TO_LOGICAL_MODEL: Record<TaskType, string> = {
   lesson: "gpt-5.2",
@@ -37,8 +24,6 @@ const TASK_TO_LOGICAL_MODEL: Record<TaskType, string> = {
   summary: "gpt-5-mini",
   orchestration: "gpt-5-mini",
 };
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface TokenUsage {
   promptTokens: number;
@@ -63,12 +48,8 @@ export interface UsageEntry {
   cost: CostBreakdown;
 }
 
-// ─── Paths ────────────────────────────────────────────────────────────────────
-
 const USAGE_JSON_PATH = path.resolve(process.cwd(), "residency", "usage.json");
 const USAGE_MD_PATH = path.resolve(process.cwd(), "residency", "usage.md");
-
-// ─── Cost Calculator ──────────────────────────────────────────────────────────
 
 export function calculateCost(logicalModel: string, usage: TokenUsage): CostBreakdown {
   const pricing = PRICING[logicalModel];
@@ -76,16 +57,13 @@ export function calculateCost(logicalModel: string, usage: TokenUsage): CostBrea
     console.warn(`[UsageLogger] No pricing found for model "${logicalModel}" — cost recorded as $0.`);
     return { inputCostUSD: 0, cachedInputCostUSD: 0, outputCostUSD: 0, totalCostUSD: 0 };
   }
-
   const nonCachedInputTokens = usage.promptTokens - usage.cachedTokens;
   const inputCostUSD = nonCachedInputTokens * (pricing.inputPerM / 1_000_000);
   const cachedInputCostUSD =
-    pricing.cachedInputPerM !== null
-      ? usage.cachedTokens * (pricing.cachedInputPerM / 1_000_000)
-      : 0;
+    pricing.cachedInputPerM !== null ? usage.cachedTokens * (pricing.cachedInputPerM / 1_000_000) : 0;
   const outputCostUSD = usage.completionTokens * (pricing.outputPerM / 1_000_000);
   const totalCostUSD = inputCostUSD + cachedInputCostUSD + outputCostUSD;
-
+  const round = (n: number) => Math.round(n * 1_000_000) / 1_000_000;
   return {
     inputCostUSD: round(inputCostUSD),
     cachedInputCostUSD: round(cachedInputCostUSD),
@@ -93,12 +71,6 @@ export function calculateCost(logicalModel: string, usage: TokenUsage): CostBrea
     totalCostUSD: round(totalCostUSD),
   };
 }
-
-function round(n: number): number {
-  return Math.round(n * 1_000_000) / 1_000_000;
-}
-
-// ─── Load / Save JSON Log ─────────────────────────────────────────────────────
 
 function loadUsageLog(): UsageEntry[] {
   if (!fs.existsSync(USAGE_JSON_PATH)) return [];
@@ -115,8 +87,6 @@ function saveUsageLog(entries: UsageEntry[]): void {
   fs.writeFileSync(USAGE_JSON_PATH, JSON.stringify(entries, null, 2), "utf-8");
 }
 
-// ─── Render Markdown ──────────────────────────────────────────────────────────
-
 function renderUsageMd(entries: UsageEntry[]): string {
   const header = [
     "# OpenAI API Usage Log",
@@ -131,24 +101,10 @@ function renderUsageMd(entries: UsageEntry[]): string {
     "| # | Timestamp | Task | Logical Model | API Model | Prompt Tokens | Cached Tokens | Completion Tokens | Total Tokens | Cost (USD) |",
     "|---|-----------|------|---------------|-----------|---------------|---------------|-------------------|--------------|------------|",
   ];
-
   const rows = entries.map((e, i) => {
     const ts = e.timestamp.replace("T", " ").replace(/\.\d+Z$/, " UTC");
-    return (
-      `| ${i + 1} ` +
-      `| ${ts} ` +
-      `| ${e.taskType} ` +
-      `| ${e.logicalModel} ` +
-      `| ${e.apiModel} ` +
-      `| ${e.usage.promptTokens.toLocaleString()} ` +
-      `| ${e.usage.cachedTokens.toLocaleString()} ` +
-      `| ${e.usage.completionTokens.toLocaleString()} ` +
-      `| ${e.usage.totalTokens.toLocaleString()} ` +
-      `| $${e.cost.totalCostUSD.toFixed(6)} |`
-    );
+    return `| ${i + 1} | ${ts} | ${e.taskType} | ${e.logicalModel} | ${e.apiModel} | ${e.usage.promptTokens.toLocaleString()} | ${e.usage.cachedTokens.toLocaleString()} | ${e.usage.completionTokens.toLocaleString()} | ${e.usage.totalTokens.toLocaleString()} | $${e.cost.totalCostUSD.toFixed(6)} |`;
   });
-
-  // Totals
   const totals = entries.reduce(
     (acc, e) => ({
       promptTokens: acc.promptTokens + e.usage.promptTokens,
@@ -160,26 +116,11 @@ function renderUsageMd(entries: UsageEntry[]): string {
       outputCostUSD: acc.outputCostUSD + e.cost.outputCostUSD,
       totalCostUSD: acc.totalCostUSD + e.cost.totalCostUSD,
     }),
-    {
-      promptTokens: 0,
-      cachedTokens: 0,
-      completionTokens: 0,
-      totalTokens: 0,
-      inputCostUSD: 0,
-      cachedInputCostUSD: 0,
-      outputCostUSD: 0,
-      totalCostUSD: 0,
-    }
+    { promptTokens: 0, cachedTokens: 0, completionTokens: 0, totalTokens: 0, inputCostUSD: 0, cachedInputCostUSD: 0, outputCostUSD: 0, totalCostUSD: 0 }
   );
-
   const summary = [
-    "",
-    "---",
-    "",
-    "## Totals",
-    "",
-    `| Metric | Value |`,
-    `|--------|-------|`,
+    "", "---", "", "## Totals", "",
+    `| Metric | Value |`, `|--------|-------|`,
     `| Total API calls | ${entries.length} |`,
     `| Total prompt tokens | ${totals.promptTokens.toLocaleString()} |`,
     `| Total cached tokens | ${totals.cachedTokens.toLocaleString()} |`,
@@ -189,21 +130,12 @@ function renderUsageMd(entries: UsageEntry[]): string {
     `| Cached input cost | $${totals.cachedInputCostUSD.toFixed(6)} |`,
     `| Output cost | $${totals.outputCostUSD.toFixed(6)} |`,
     `| **Total cost** | **$${totals.totalCostUSD.toFixed(6)}** |`,
-    "",
-    "---",
-    "",
-    "## Cost by Model",
-    "",
+    "", "---", "", "## Cost by Model", "",
   ];
-
-  // Per-model breakdown
   const byModel: Record<string, typeof totals> = {};
   for (const e of entries) {
     if (!byModel[e.logicalModel]) {
-      byModel[e.logicalModel] = {
-        promptTokens: 0, cachedTokens: 0, completionTokens: 0, totalTokens: 0,
-        inputCostUSD: 0, cachedInputCostUSD: 0, outputCostUSD: 0, totalCostUSD: 0,
-      };
+      byModel[e.logicalModel] = { promptTokens: 0, cachedTokens: 0, completionTokens: 0, totalTokens: 0, inputCostUSD: 0, cachedInputCostUSD: 0, outputCostUSD: 0, totalCostUSD: 0 };
     }
     const m = byModel[e.logicalModel];
     m.promptTokens += e.usage.promptTokens;
@@ -215,51 +147,25 @@ function renderUsageMd(entries: UsageEntry[]): string {
     m.outputCostUSD += e.cost.outputCostUSD;
     m.totalCostUSD += e.cost.totalCostUSD;
   }
-
   const modelRows = [
     "| Logical Model | Calls | Total Tokens | Input Cost | Cached Cost | Output Cost | Total Cost |",
     "|---------------|-------|--------------|------------|-------------|-------------|------------|",
     ...Object.entries(byModel).map(([model, m]) => {
       const calls = entries.filter((e) => e.logicalModel === model).length;
-      return (
-        `| ${model} | ${calls} | ${m.totalTokens.toLocaleString()} ` +
-        `| $${m.inputCostUSD.toFixed(6)} | $${m.cachedInputCostUSD.toFixed(6)} ` +
-        `| $${m.outputCostUSD.toFixed(6)} | $${m.totalCostUSD.toFixed(6)} |`
-      );
+      return `| ${model} | ${calls} | ${m.totalTokens.toLocaleString()} | $${m.inputCostUSD.toFixed(6)} | $${m.cachedInputCostUSD.toFixed(6)} | $${m.outputCostUSD.toFixed(6)} | $${m.totalCostUSD.toFixed(6)} |`;
     }),
   ];
-
   return [...header, ...rows, ...summary, ...modelRows, ""].join("\n");
 }
 
-// ─── Public API ───────────────────────────────────────────────────────────────
-
-export function logUsage(
-  taskType: TaskType,
-  apiModel: string,
-  usage: TokenUsage
-): UsageEntry {
+export function logUsage(taskType: TaskType, apiModel: string, usage: TokenUsage): UsageEntry {
   const logicalModel = TASK_TO_LOGICAL_MODEL[taskType] ?? apiModel;
   const cost = calculateCost(logicalModel, usage);
-
-  const entry: UsageEntry = {
-    timestamp: new Date().toISOString(),
-    taskType,
-    logicalModel,
-    apiModel,
-    usage,
-    cost,
-  };
-
+  const entry: UsageEntry = { timestamp: new Date().toISOString(), taskType, logicalModel, apiModel, usage, cost };
   const entries = loadUsageLog();
   entries.push(entry);
   saveUsageLog(entries);
   fs.writeFileSync(USAGE_MD_PATH, renderUsageMd(entries), "utf-8");
-
-  console.log(
-    `  [UsageLogger] ${taskType} | ${logicalModel} | ` +
-      `${entry.usage.totalTokens} tokens | $${cost.totalCostUSD.toFixed(6)}`
-  );
-
+  console.log(`  [UsageLogger] ${taskType} | ${logicalModel} | ${entry.usage.totalTokens} tokens | $${cost.totalCostUSD.toFixed(6)}`);
   return entry;
 }
