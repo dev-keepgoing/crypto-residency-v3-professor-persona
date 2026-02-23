@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2026-02-23T11:52:48.525Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 608,
+      "cachedTokens": 0,
+      "completionTokens": 2516,
+      "totalTokens": 3124
+    },
+    "cost": {
+      "inputCostUSD": 0.001064,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.035224,
+      "totalCostUSD": 0.036288
+    }
+  },
+  {
+    "timestamp": "2026-02-23T11:53:05.284Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 771,
+      "cachedTokens": 0,
+      "completionTokens": 1200,
+      "totalTokens": 1971
+    },
+    "cost": {
+      "inputCostUSD": 0.001349,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.0168,
+      "totalCostUSD": 0.018149
+    }
+  },
+  {
+    "timestamp": "2026-02-23T12:26:02.536Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 608,
+      "cachedTokens": 0,
+      "completionTokens": 2586,
+      "totalTokens": 3194
+    },
+    "cost": {
+      "inputCostUSD": 0.001064,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.036204,
+      "totalCostUSD": 0.037268
+    }
+  },
+  {
+    "timestamp": "2026-02-23T12:26:21.275Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 778,
+      "cachedTokens": 0,
+      "completionTokens": 1202,
+      "totalTokens": 1980
+    },
+    "cost": {
+      "inputCostUSD": 0.001362,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.016828,
+      "totalCostUSD": 0.01819
+    }
+  },
+  {
+    "timestamp": "2026-02-23T12:26:35.812Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 477,
+      "cachedTokens": 0,
+      "completionTokens": 726,
+      "totalTokens": 1203
+    },
+    "cost": {
+      "inputCostUSD": 0.000835,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.010164,
+      "totalCostUSD": 0.010999
+    }
+  }
+]

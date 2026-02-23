@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import fs from "fs";
 import path from "path";
 
 // Load environment variables before any module that reads them
@@ -6,7 +7,8 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 import { loadState, saveState, appendStateSummary, pushHistoryEntry } from "../../packages/core/state";
 import { getLessonByDay, isResidencyComplete, getLastCurriculumDay } from "../../packages/core/curriculum";
-import { generateLesson } from "../../packages/core/personas";
+import { generateLesson, getProfessorPersona } from "../../packages/core/personas";
+import { generateHomeworkOnly } from "../../packages/core/lesson";
 import { commitFiles } from "../../packages/github/github-client";
 import { routeTask } from "../../packages/core/routing";
 import { callOpenAI } from "../../packages/llm/openai-client";
@@ -84,18 +86,66 @@ async function run(): Promise<void> {
   console.log(`  Topic: ${curriculumLesson.topic}`);
   console.log(`  Professor: ${professorId}\n`);
 
-  // ── 4. Generate Lesson ───────────────────────────────────────────────────
-  const generated = await generateLesson({
-    day: state.currentDay,
-    topic: curriculumLesson.topic,
-    professorId,
-    attempt: state.attempt,
-  });
-
-  // ── 5. Commit to GitHub ──────────────────────────────────────────────────
   const label = dayLabel(state.currentDay);
-  console.log(`\n[Orchestrator] Committing files to GitHub (${label})...`);
+  const dayDir = path.resolve(process.cwd(), "residency", label);
 
+  // ── 3b. If this day has failed homework, bump attempt and regenerate only homework (same lesson + rubric) ──
+  const gradingPath = path.join(dayDir, "grading.json");
+  const lessonPath = path.join(dayDir, "lesson.md");
+  const rubricPath = path.join(dayDir, "rubric.md");
+  let generated: { lesson: string; homework: string; rubric: string };
+
+  if (fs.existsSync(gradingPath)) {
+    let grading: { pass?: boolean };
+    try {
+      grading = JSON.parse(fs.readFileSync(gradingPath, "utf-8"));
+    } catch {
+      grading = {};
+    }
+    if (grading.pass === false && fs.existsSync(lessonPath) && fs.existsSync(rubricPath)) {
+      state.attempt = (state.attempt || 1) + 1;
+      state.status = "NOT_STARTED";
+      saveState(state);
+      console.log(`[Orchestrator] Failed homework detected for Day ${state.currentDay} → attempt ${state.attempt}; generating new homework only (same lesson + rubric).\n`);
+      const persona = getProfessorPersona(professorId);
+      const newHomework = await generateHomeworkOnly(
+        {
+          day: state.currentDay,
+          topic: curriculumLesson.topic,
+          professorId,
+          attempt: state.attempt,
+        },
+        persona,
+        lessonPath,
+        dayDir
+      );
+      generated = {
+        lesson: fs.readFileSync(lessonPath, "utf-8"),
+        homework: newHomework,
+        rubric: fs.readFileSync(rubricPath, "utf-8"),
+      };
+    } else {
+      generated = await generateLesson({
+        day: state.currentDay,
+        topic: curriculumLesson.topic,
+        professorId,
+        attempt: state.attempt,
+        outputDir: dayDir,
+      });
+    }
+  } else {
+    // ── 4. Generate Lesson (writes to residency/day-00X/ when outputDir set; skips OpenAI if files exist) ──
+    generated = await generateLesson({
+      day: state.currentDay,
+      topic: curriculumLesson.topic,
+      professorId,
+      attempt: state.attempt,
+      outputDir: dayDir,
+    });
+  }
+
+  // ── 5. Commit to GitHub (files already written locally by generator) ─────────
+  console.log(`\n[Orchestrator] Committing files to GitHub (${label})...`);
   const commitResult = await commitFiles(
     [
       { path: `residency/${label}/lesson.md`, content: generated.lesson },

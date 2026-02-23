@@ -60,7 +60,7 @@ export async function callOpenAI(params: OpenAICallParams): Promise<string> {
           { role: "user", content: userPrompt },
         ],
         temperature,
-        max_tokens: maxTokens,
+        max_completion_tokens: maxTokens,
       });
 
       // ── Log token usage whenever the API returns it (even if content is empty) ─

@@ -5,6 +5,7 @@
   "description": "Autonomous Cryptographic Residency Engine",
   "scripts": {
     "day:run": "ts-node -r tsconfig-paths/register --project tsconfig.json apps/orchestrator/index.ts",
+    "grade": "ts-node -r tsconfig-paths/register --project tsconfig.json apps/tools/grade-submission.ts",
     "homework-specs:init": "ts-node -r tsconfig-paths/register --project tsconfig.json apps/tools/generate-homework-specs.ts --pretty",
     "homework-specs:regen": "ts-node -r tsconfig-paths/register --project tsconfig.json apps/tools/generate-homework-specs.ts --pretty --force",
     "structured-inputs:init": "npm run homework-specs:init",

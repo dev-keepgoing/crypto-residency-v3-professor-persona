@@ -1,1 +1,1 @@
-export { generateLessonContent } from "./lesson-generator";
+export { generateLessonContent, generateHomeworkOnly } from "./lesson-generator";

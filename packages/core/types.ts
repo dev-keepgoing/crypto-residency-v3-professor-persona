@@ -185,6 +185,8 @@ export interface GenerateLessonParams {
   topic: string;
   professorId: string;
   attempt: number;
+  /** If set, read existing lesson/homework/rubric from disk when present; write each artifact after generating. */
+  outputDir?: string;
 }
 
 export interface GeneratedLesson {
