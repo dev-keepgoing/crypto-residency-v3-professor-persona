@@ -1,6 +1,6 @@
 /**
- * Grading engine: loads professor persona, builds a grading prompt with bias and strictness,
- * calls OpenAI for JSON score/pass/feedback, and enforces the passing rule (e.g. score >= 80).
+ * Grading engine: static system prompt (cache-friendly), variable data in user message.
+ * Loads persona for gradingBias and strictness; outputs JSON score/pass/feedback; enforces passing rule.
  */
 import { GradeSubmissionParams, GradingResult } from "../types";
 import { getProfessorPersona } from "../personas";
@@ -17,26 +17,6 @@ function strictnessLevelDescription(level: number): string {
   return "accessible standards — good faith effort with correct core ideas can pass";
 }
 
-function buildGradingSystemPrompt(
-  professorName: string,
-  strictnessLevel: number,
-  gradingBias: string
-): string {
-  const template = getGradingPromptSection("Grading System");
-  return substitute(template, {
-    professorName,
-    gradingBias,
-    strictnessLevel: String(strictnessLevel),
-    strictnessDescription: strictnessLevelDescription(strictnessLevel),
-    passingScore: String(PASSING_SCORE),
-  });
-}
-
-function buildGradingUserPrompt(lesson: string, rubric: string, submissionText: string): string {
-  const template = getGradingPromptSection("Grading User");
-  return substitute(template, { lesson, rubric, submissionText });
-}
-
 export async function gradeSubmission(params: GradeSubmissionParams): Promise<GradingResult> {
   const { professorId, lesson, rubric, submissionText } = params;
 
@@ -45,20 +25,28 @@ export async function gradeSubmission(params: GradeSubmissionParams): Promise<Gr
 
   console.log(`\n[GradingEngine] Grading submission — Professor: ${persona.name} | Model: ${model}`);
 
-  const systemPrompt = buildGradingSystemPrompt(
-    persona.name,
-    persona.strictnessLevel,
-    persona.gradingBias
-  );
+  const systemPrompt = getGradingPromptSection("Grading System");
 
-  const userPrompt = buildGradingUserPrompt(lesson, rubric, submissionText);
+  const userPrompt = substitute(
+    getGradingPromptSection("Grading User"),
+    {
+      lesson,
+      rubric,
+      submissionText,
+      professorId: persona.id,
+      gradingBias: persona.gradingBias,
+      passingScore: String(PASSING_SCORE),
+      strictnessLevel: String(persona.strictnessLevel),
+      strictnessDescription: strictnessLevelDescription(persona.strictnessLevel),
+    }
+  );
 
   const raw = await callOpenAI({
     model,
     systemPrompt,
     userPrompt,
     temperature: 0.1,
-    maxTokens: 1024,
+    maxTokens: 900,
     taskType: "grading",
   });
 

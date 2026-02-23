@@ -18,6 +18,8 @@ export type LessonStatus =
 export interface ProfessorPersona {
   id: string;
   name: string;
+  /** One-line signature for prompts (cache-friendly). Full fields used for grading. */
+  signature?: string;
   teachingStyle: string;
   focusAreas: string[];
   strictnessLevel: number; // 1–10
@@ -108,6 +110,51 @@ export interface StructuredInputsFile {
     curriculumVersion?: string;
   };
   days: StructuredInputsDay[];
+}
+
+// ─── Minimal spec views (ID-based, small payloads) ───────────────────────────
+
+export interface LessonSpecView {
+  specRef: string;
+  objectives: { id: string; category: string; text: string }[];
+  constraints: { requiresDerivation?: boolean; requiresImplementation?: boolean; adversarialFocus?: boolean; problemCounts?: GovernedProblemCounts };
+  passScore: number;
+}
+
+export interface HomeworkSpecView {
+  specRef: string;
+  problemCounts: GovernedProblemCounts;
+  objectiveIds: string[];
+  constraints: GovernedConstraints;
+}
+
+export interface RubricSpecView {
+  specRef: string;
+  problems: { id: string; title?: string; type?: string; points: number }[];
+  dimensions: { id: string; name: string; points: number; minimumPoints: number }[];
+  passScore: number;
+}
+
+// ─── Structured outputs (lesson → homework, homework → rubric) ───────────────
+
+export interface LessonMetadata {
+  keyPoints?: string[];
+  definitions?: string[];
+  coreDerivations?: string[];
+  labAPIs?: string[];
+  edgeCases?: string[];
+  attackScenario?: string;
+}
+
+export interface HomeworkProblemItem {
+  id: string;
+  type: string;
+  points: number;
+  title?: string;
+}
+
+export interface HomeworkProblemList {
+  problems: HomeworkProblemItem[];
 }
 
 // ─── Residency State ─────────────────────────────────────────────────────────

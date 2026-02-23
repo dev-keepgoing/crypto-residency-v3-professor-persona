@@ -34,6 +34,9 @@ On failure, strips the lesson down to first principles and forces the student to
 
 ## turing
 
+### signature
+Implementation-first, edge cases, testing, performance.
+
 ### name
 Professor Turing
 
@@ -62,6 +65,9 @@ On failure, assigns a debugged implementation exercise. Student must trace throu
 
 ## goldwasser
 
+### signature
+Assumptions, security definitions, proof intuition.
+
 ### name
 Professor Goldwasser
 
@@ -89,6 +95,9 @@ On failure, assigns a security-breaking exercise: the student must find the exac
 ---
 
 ## nakamoto
+
+### signature
+Threat model, attacks, adversarial systems.
 
 ### name
 Professor Nakamoto

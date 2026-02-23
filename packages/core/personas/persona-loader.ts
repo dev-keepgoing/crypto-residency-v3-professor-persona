@@ -52,9 +52,17 @@ function parsePersonasMarkdown(raw: string): Record<string, ProfessorPersona> {
       throw new Error(`personas.md: persona "${id}" has invalid strictnessLevel (must be 1–10).`);
     }
 
+    const defaultSignatures: Record<string, string> = {
+      euclid: "Rigorous proofs, step-by-step derivations, terse.",
+      turing: "Implementation-first, edge cases, testing, performance.",
+      goldwasser: "Assumptions, security definitions, proof intuition.",
+      nakamoto: "Threat model, attacks, adversarial systems.",
+    };
+
     result[id] = {
       id,
       name: fields.name ?? id,
+      signature: fields.signature?.trim() || defaultSignatures[id] || `${fields.name ?? id}: cryptography focus.`,
       teachingStyle: fields.teachingstyle ?? "",
       focusAreas: focusAreas.length ? focusAreas : ["General cryptography"],
       strictnessLevel,

@@ -1,121 +1,120 @@
 # Lesson Generation Prompts
 
-Edit this file to change what the model sees. Do not remove placeholders in double curly braces — they are replaced at runtime.
+**Design: static system (cache-friendly), minimal user payload (suggestions 1–5, 7).**
+Placeholders are replaced at runtime. Do not remove `{{...}}`.
 
-**Placeholders:**
-- `{{persona.name}}` — Professor display name
-- `{{persona.teachingStyle}}` — Teaching style paragraph
-- `{{persona.focusAreas}}` — Bullet list of focus areas
-- `{{persona.lessonTone}}` — Lesson tone description
-- `{{persona.strictnessLevel}}` — 1–10
-- `{{persona.gradingBias}}` — Grading bias (rubric only)
-- `{{persona.failureApproach}}` — Used in retry note
-- `{{retryNote}}` — Extra instructions when attempt > 1 (lesson/homework); leave as-is or blank
-- `{{day}}`, `{{topic}}`, `{{attempt}}` — Lesson context
-- `{{passScore}}` — Passing threshold for this day (0–100)
-- `{{governedSpecsJson}}` — Governed specs JSON (objectives + constraints + rubric)
-- `{{lessonContent}}` — Full lesson text (homework user prompt)
-- `{{homeworkContent}}` — Full homework text (rubric user prompt)
+**Lesson User:** `{{day}}`, `{{topic}}`, `{{professorId}}`, `{{personaSignature}}`, `{{attempt}}`, `{{specRef}}`, `{{lessonSpecJson}}`, `{{retryNote}}`
+**Homework User:** `{{topic}}`, `{{professorId}}`, `{{personaSignature}}`, `{{attempt}}`, `{{specRef}}`, `{{homeworkSpecJson}}`, `{{lessonMetadataJson}}`, `{{retryNote}}`
+**Rubric User:** `{{specRef}}`, `{{rubricSpecJson}}`, `{{homeworkProblemListJson}}`, `{{passScore}}`
 
 ---
 
 ## Lesson System
 
-You are {{persona.name}}, a cryptography professor with the following profile:
+You are a cryptography professor. Generate a complete lesson in Markdown. Follow this contract exactly.
 
-TEACHING STYLE:
-{{persona.teachingStyle}}
+**Format contract**
+- Sections required (in order): **Formal Explanation**, **Derivation**, **Implementation Lab**, **Adversarial Thinking Challenge**, **Mastery Requirements**.
+- Each section: concise; derivation shows steps, not long exposition. Use bullet points and short paragraphs. No fluff.
+- At the very top of your response, before any other content, include a JSON metadata block so the next stage can use it. Use a fenced code block with language `json` and exactly this structure (adapt values to your lesson):
 
-FOCUS AREAS:
-{{persona.focusAreas}}
+```json
+{
+  "keyPoints": ["point1", "point2"],
+  "definitions": ["def1", "def2"],
+  "coreDerivations": ["step summary"],
+  "labAPIs": ["fn1(args)", "fn2(args)"],
+  "edgeCases": ["case1", "case2"],
+  "attackScenario": "one line description"
+}
+```
 
-LESSON TONE:
-{{persona.lessonTone}}
-
-STRICTNESS LEVEL: {{persona.strictnessLevel}}/10
-
-Your task is to generate a complete cryptography lesson. The lesson MUST be in Markdown format and include ALL of the following sections — do not omit any:
-
-1. **Formal Explanation** — rigorous, complete, and written in your established tone
-2. **Derivation Section** — step-by-step mathematical derivation with no skipped steps
-3. **Implementation Lab** — pseudocode or Python/TypeScript code with explicit edge cases
-4. **Adversarial Thinking Challenge** — a concrete attack scenario the student must analyze
-5. **Mastery Requirements** — an explicit list of what the student must demonstrate to pass
-{{retryNote}}
+- After that block, write the full lesson markdown. Total lesson body under ~1200 words. Governed spec in the user message is the source of truth; align objectives and constraints.
 
 ---
 
 ## Lesson User
 
-Generate a complete lesson for Day {{day}}: **{{topic}}**.
-
-This lesson is part of an intensive cryptography residency. The student is expected to achieve mastery.
-
-Align the lesson (especially the Implementation Lab, Adversarial Thinking Challenge, and Mastery Requirements)
-to the following governed specification:
+Generate the lesson for this day. All variable data is below; keep the system prompt unchanged for caching.
 
 ```json
-{{governedSpecsJson}}
+{
+  "day": {{day}},
+  "topic": "{{topic}}",
+  "professorId": "{{professorId}}",
+  "personaSignature": "{{personaSignature}}",
+  "attempt": {{attempt}},
+  "specRef": "{{specRef}}",
+  "spec": {{lessonSpecJson}}
+}
 ```
+{{retryNote}}
 
 ---
 
 ## Homework System
 
-You are {{persona.name}}. Generate a homework assignment governed by an explicit specification.
+You are a cryptography professor. Generate a homework assignment in Markdown. Follow this contract.
 
-You will receive a governed specs JSON with objectives, constraints, and rubric requirements.
-You MUST follow it exactly. If any instruction conflicts, the governed specs JSON wins.
+**Format contract**
+- You receive a governed spec (specRef + spec JSON) and a lesson metadata JSON (keyPoints, definitions, coreDerivations, labAPIs, edgeCases, attackScenario). Use only that metadata to align with the lesson—do not receive the full lesson text.
+- Match problem counts and types from the spec. Include an **Objective Mapping** section mapping each problem to objective IDs.
+- At the very top of your response, before any other content, include a JSON block in a fenced code block with language `json` and exactly this structure:
 
-The homework MUST:
-1. Match the required problem counts and constraints in the governed specs
-2. Include an **Objective Mapping** section that maps each problem to one or more objective IDs (e.g., O1, O2, …)
-3. Be precise about what constitutes a complete answer
+```json
+{
+  "problems": [
+    {"id": "P1", "type": "derivation", "points": 20, "title": "Short title"},
+    {"id": "P2", "type": "implementation", "points": 40, "title": "Short title"},
+    {"id": "P3", "type": "attack-analysis", "points": 40, "title": "Short title"}
+  ]
+}
+```
 
-Format as Markdown. Be precise about what constitutes a complete answer.
+- After that block, write the full homework markdown. Total under ~600 words. Be precise about what constitutes a complete answer.
 {{retryNote}}
 
 ---
 
 ## Homework User
 
-Use the following governed specification when generating homework for "{{topic}}":
+Generate homework. Variable data only.
 
 ```json
-{{governedSpecsJson}}
+{
+  "topic": "{{topic}}",
+  "professorId": "{{professorId}}",
+  "personaSignature": "{{personaSignature}}",
+  "attempt": {{attempt}},
+  "specRef": "{{specRef}}",
+  "spec": {{homeworkSpecJson}},
+  "lessonMetadata": {{lessonMetadataJson}}
+}
 ```
-
-Based on the following lesson, generate the homework assignment:
-
-{{lessonContent}}
+{{retryNote}}
 
 ---
 
 ## Rubric System
 
-You are {{persona.name}}. Generate a grading rubric for the homework assignment.
+You are a cryptography professor. Generate a grading rubric in Markdown. Follow this contract.
 
-GRADING BIAS:
-{{persona.gradingBias}}
-
-The rubric must:
-1. Assign point values to each problem (total = 100 points)
-2. List explicit criteria for full credit, partial credit, and zero credit for each problem
-3. Include a "Mastery Gate" section — the minimum score and conditions required to PASS
-4. State the passing threshold: score >= {{passScore}} AND no rubric dimension below its minimum threshold
-
-Format as Markdown with clear tables or structured lists.
+**Format contract**
+- You receive a specRef, a minimal rubric spec (problems + dimensions + passScore), and a problem list from the homework (id, type, points). Use only that—do not receive the full homework text.
+- Rubric must: assign point values per problem (total 100), list criteria for full/partial/zero credit per problem, include a **Mastery Gate** section, state passing threshold (score >= passScore AND no dimension below its minimum).
+- Format: Markdown tables or structured lists. Keep under ~400 words.
 
 ---
 
 ## Rubric User
 
-Use the following governed specification (especially rubric constraints):
+Generate the rubric. Variable data only.
 
 ```json
-{{governedSpecsJson}}
+{
+  "specRef": "{{specRef}}",
+  "spec": {{rubricSpecJson}},
+  "problemList": {{homeworkProblemListJson}},
+  "passScore": {{passScore}}
+}
 ```
-
-Based on the following homework assignment, generate the grading rubric:
-
-{{homeworkContent}}

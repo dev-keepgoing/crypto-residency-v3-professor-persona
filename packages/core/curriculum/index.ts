@@ -12,3 +12,4 @@ export {
   getStructuredInputsFile,
   getStructuredInputsByDay,
 } from "./homework-specs";
+export { getLessonSpecView, getHomeworkSpecView, getRubricSpecView } from "./spec-views";
