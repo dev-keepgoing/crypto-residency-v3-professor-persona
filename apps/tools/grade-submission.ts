@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 import { gradeSubmission } from "../../packages/core/grading";
 import { loadState, saveState } from "../../packages/core/state";
+import { getNextLesson, TOTAL_CURRICULUM_DAYS } from "../../packages/core/curriculum";
 
 function dayLabel(day: number): string {
   return `day-${String(day).padStart(3, "0")}`;
@@ -94,8 +95,26 @@ async function main(): Promise<void> {
     saveState(updated);
     console.log(
       `[GradeSubmission] Homework failed. State updated: attempt=${updated.attempt} status=NOT_STARTED.\n` +
-        `  Run \`npm run day:run\` to generate a second attempt (new lesson/homework/rubric).\n`
+        `  Run \`npm run day:run\` to generate a second attempt (new homework only).\n`
     );
+  } else {
+    const nextLesson = getNextLesson(day);
+    const updated = {
+      ...state,
+      currentDay: Math.min(day + 1, TOTAL_CURRICULUM_DAYS),
+      currentLessonId: nextLesson?.lessonId ?? state.currentLessonId,
+      attempt: 1,
+      status: "NOT_STARTED" as const,
+    };
+    saveState(updated);
+    if (day < TOTAL_CURRICULUM_DAYS) {
+      console.log(
+        `[GradeSubmission] Pass. Advanced to day ${updated.currentDay} (${nextLesson?.lessonId ?? "—"}).\n` +
+          `  Run \`npm run day:run\` to generate the next lesson.\n`
+      );
+    } else {
+      console.log(`[GradeSubmission] Pass. Residency complete.\n`);
+    }
   }
 }
 

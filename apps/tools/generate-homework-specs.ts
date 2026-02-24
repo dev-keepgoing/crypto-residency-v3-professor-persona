@@ -27,27 +27,31 @@ type CurriculumFileV2 = {
 };
 
 const CURRICULUM_PATH = path.resolve(process.cwd(), "curriculum", "curriculum.json");
+const PRE_CURRICULUM_PATH = path.resolve(process.cwd(), "curriculum", "pre-curriculum.json");
 const DEFAULT_OUT_PATH = path.resolve(process.cwd(), "curriculum", "homework-specs.json");
+const PRE_DEFAULT_OUT_PATH = path.resolve(process.cwd(), "curriculum", "pre-homework-specs.json");
 
-function parseArgs(argv: string[]): { outPath: string; pretty: boolean; force: boolean } {
+function parseArgs(argv: string[]): { outPath: string; pretty: boolean; force: boolean; pre: boolean } {
+  const pre = argv.includes("--pre");
+  const defaultOut = pre ? PRE_DEFAULT_OUT_PATH : DEFAULT_OUT_PATH;
   const outIdx = argv.indexOf("--out");
-  const outPath = outIdx >= 0 && argv[outIdx + 1] ? path.resolve(process.cwd(), argv[outIdx + 1]) : DEFAULT_OUT_PATH;
+  const outPath = outIdx >= 0 && argv[outIdx + 1] ? path.resolve(process.cwd(), argv[outIdx + 1]) : defaultOut;
   const pretty = argv.includes("--pretty") || !argv.includes("--minify");
   const force = argv.includes("--force");
-  return { outPath, pretty, force };
+  return { outPath, pretty, force, pre };
 }
 
-function readCurriculum(): {
+function readCurriculumFromPath(curriculumPath: string): {
   curriculumId: string;
   curriculumVersion: string;
   modules: CurriculumModule[];
   lessons: CurriculumLesson[];
 } {
-  if (!fs.existsSync(CURRICULUM_PATH)) {
-    throw new Error(`Missing curriculum file: ${CURRICULUM_PATH}`);
+  if (!fs.existsSync(curriculumPath)) {
+    throw new Error(`Missing curriculum file: ${curriculumPath}`);
   }
 
-  const raw = fs.readFileSync(CURRICULUM_PATH, "utf-8");
+  const raw = fs.readFileSync(curriculumPath, "utf-8");
   const parsed = JSON.parse(raw) as unknown;
 
   if (Array.isArray(parsed)) {
@@ -61,12 +65,12 @@ function readCurriculum(): {
   }
 
   if (!parsed || typeof parsed !== "object") {
-    throw new Error(`${CURRICULUM_PATH} must be either an array of lessons or an object with lessons.`);
+    throw new Error(`${curriculumPath} must be either an array of lessons or an object with lessons.`);
   }
 
   const v2 = parsed as CurriculumFileV2;
   if (!Array.isArray(v2.lessons)) {
-    throw new Error(`${CURRICULUM_PATH} is missing "lessons" array.`);
+    throw new Error(`${curriculumPath} is missing "lessons" array.`);
   }
 
   return {
@@ -75,6 +79,10 @@ function readCurriculum(): {
     modules: Array.isArray(v2.modules) ? v2.modules : [],
     lessons: v2.lessons,
   };
+}
+
+function readCurriculum(): ReturnType<typeof readCurriculumFromPath> {
+  return readCurriculumFromPath(CURRICULUM_PATH);
 }
 
 function normalizeTopic(topic: string): string {
@@ -159,8 +167,9 @@ function buildDaySpec(params: {
 }
 
 async function main(): Promise<void> {
-  const { outPath, pretty, force } = parseArgs(process.argv.slice(2));
-  const { curriculumId, curriculumVersion, modules, lessons } = readCurriculum();
+  const { outPath, pretty, force, pre } = parseArgs(process.argv.slice(2));
+  const curriculumPath = pre ? PRE_CURRICULUM_PATH : CURRICULUM_PATH;
+  const { curriculumId, curriculumVersion, modules, lessons } = readCurriculumFromPath(curriculumPath);
 
   if (fs.existsSync(outPath) && !force) {
     throw new Error(
@@ -185,7 +194,7 @@ async function main(): Promise<void> {
     curriculumId,
     version: "0.1.0",
     generatedAt: new Date().toISOString(),
-    source: { path: "curriculum/curriculum.json", curriculumVersion },
+    source: { path: path.relative(process.cwd(), curriculumPath), curriculumVersion },
     days,
   };
 

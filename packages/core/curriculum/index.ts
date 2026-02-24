@@ -5,6 +5,10 @@ export {
   getNextLesson,
   isResidencyComplete,
   getLastCurriculumDay,
+  PRE_CURRICULUM_DAYS,
+  MAIN_CURRICULUM_FIRST_DAY,
+  TOTAL_CURRICULUM_DAYS,
+  isPreCurriculumDay,
 } from "./curriculum";
 export {
   getHomeworkSpecsFile,

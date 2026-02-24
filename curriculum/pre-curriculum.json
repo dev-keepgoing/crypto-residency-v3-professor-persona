@@ -1,0 +1,48 @@
+{
+    "curriculumId": "math-foundations-30d",
+    "version": "1.0.0",
+    "totalDays": 30,
+    "modules": [
+      { "moduleId": "ARITH", "moduleName": "Arithmetic & Modular Intuition", "days": [1,2,3,4,5,6,7] },
+      { "moduleId": "STRUCT", "moduleName": "Algebraic Structures (Groups)", "days": [8,9,10,11,12,13,14] },
+      { "moduleId": "FIELDS", "moduleName": "Finite Fields Core", "days": [15,16,17,18,19,20] },
+      { "moduleId": "POLY", "moduleName": "Polynomials & Interpolation", "days": [21,22,23,24,25] },
+      { "moduleId": "PROOF", "moduleName": "Proof Thinking & Adversarial Reasoning", "days": [26,27,28,29,30] }
+    ],
+    "lessons": [
+      { "day": 1, "lessonId": "ARITH-001", "topic": "Integers, Divisibility, and Prime vs Composite", "difficulty": 1, "passScore": 80, "defaultProfessorId": "euclid" },
+      { "day": 2, "lessonId": "ARITH-002", "topic": "Modular Arithmetic — Congruence and Wrap-Around Intuition", "difficulty": 1, "passScore": 80, "defaultProfessorId": "euclid" },
+      { "day": 3, "lessonId": "ARITH-003", "topic": "Prime Numbers — Factorization and Why Primes Matter", "difficulty": 2, "passScore": 80, "defaultProfessorId": "euclid" },
+      { "day": 4, "lessonId": "ARITH-004", "topic": "Greatest Common Divisor (gcd) and the Euclidean Algorithm", "difficulty": 2, "passScore": 80, "defaultProfessorId": "turing" },
+      { "day": 5, "lessonId": "ARITH-005", "topic": "Extended Euclidean Algorithm — Bezout Coefficients", "difficulty": 3, "passScore": 82, "defaultProfessorId": "turing" },
+      { "day": 6, "lessonId": "ARITH-006", "topic": "Modular Inverses — When They Exist and How to Compute Them", "difficulty": 3, "passScore": 82, "defaultProfessorId": "turing" },
+      { "day": 7, "lessonId": "ARITH-EX1", "topic": "Arithmetic & Modular Mastery Review", "difficulty": 3, "passScore": 84, "defaultProfessorId": "nakamoto" },
+  
+      { "day": 8, "lessonId": "STRUCT-001", "topic": "Groups — Definition, Identity, Inverses, and Examples", "difficulty": 2, "passScore": 80, "defaultProfessorId": "euclid" },
+      { "day": 9, "lessonId": "STRUCT-002", "topic": "Cyclic Groups — Generators and Representation by Powers", "difficulty": 3, "passScore": 82, "defaultProfessorId": "euclid" },
+      { "day": 10, "lessonId": "STRUCT-003", "topic": "Order of an Element — The Smallest k with g^k = 1", "difficulty": 3, "passScore": 82, "defaultProfessorId": "euclid" },
+      { "day": 11, "lessonId": "STRUCT-004", "topic": "Subgroups — Structure Inside Structure", "difficulty": 3, "passScore": 82, "defaultProfessorId": "euclid" },
+      { "day": 12, "lessonId": "STRUCT-005", "topic": "Lagrange’s Theorem (Operational Intuition) — Why Orders Divide Group Size", "difficulty": 4, "passScore": 84, "defaultProfessorId": "goldwasser" },
+      { "day": 13, "lessonId": "STRUCT-006", "topic": "Discrete Logarithm Intuition — One-Wayness in Groups", "difficulty": 4, "passScore": 84, "defaultProfessorId": "nakamoto" },
+      { "day": 14, "lessonId": "STRUCT-EX1", "topic": "Groups Mastery Review — Generators, Orders, and Subgroups", "difficulty": 4, "passScore": 85, "defaultProfessorId": "nakamoto" },
+  
+      { "day": 15, "lessonId": "FIELDS-001", "topic": "Field vs Ring — Division Works Only in Fields", "difficulty": 3, "passScore": 82, "defaultProfessorId": "euclid" },
+      { "day": 16, "lessonId": "FIELDS-002", "topic": "Characteristic — What char(F)=p Means and Why p Must Be Prime", "difficulty": 4, "passScore": 85, "defaultProfessorId": "euclid" },
+      { "day": 17, "lessonId": "FIELDS-003", "topic": "Prime Subfield — How F_p Lives Inside Every Finite Field", "difficulty": 4, "passScore": 85, "defaultProfessorId": "euclid" },
+      { "day": 18, "lessonId": "FIELDS-004", "topic": "Finite Fields Have Size p^n — Vector Space Counting Intuition", "difficulty": 5, "passScore": 85, "defaultProfessorId": "goldwasser" },
+      { "day": 19, "lessonId": "FIELDS-005", "topic": "Field Extensions (Conceptual) — Why Larger Finite Fields Exist", "difficulty": 5, "passScore": 85, "defaultProfessorId": "goldwasser" },
+      { "day": 20, "lessonId": "FIELDS-EX1", "topic": "Finite Fields Mastery Review — Prime Powers, Inverses, and Failure Modes", "difficulty": 5, "passScore": 86, "defaultProfessorId": "nakamoto" },
+  
+      { "day": 21, "lessonId": "POLY-001", "topic": "Polynomials Over Finite Fields — Arithmetic and Degree", "difficulty": 5, "passScore": 85, "defaultProfessorId": "euclid" },
+      { "day": 22, "lessonId": "POLY-002", "topic": "Polynomial Evaluation — Computing f(x) mod p", "difficulty": 5, "passScore": 85, "defaultProfessorId": "turing" },
+      { "day": 23, "lessonId": "POLY-003", "topic": "Lagrange Interpolation — Reconstructing from Points", "difficulty": 6, "passScore": 86, "defaultProfessorId": "euclid" },
+      { "day": 24, "lessonId": "POLY-004", "topic": "Secret Sharing Intuition — Threshold Reconstruction via Interpolation", "difficulty": 6, "passScore": 86, "defaultProfessorId": "goldwasser" },
+      { "day": 25, "lessonId": "POLY-EX1", "topic": "Polynomials Mastery Review — Evaluate, Interpolate, and Sanity-Check", "difficulty": 6, "passScore": 86, "defaultProfessorId": "nakamoto" },
+  
+      { "day": 26, "lessonId": "PROOF-001", "topic": "Proof Literacy — Definitions, Theorems, and How to Read Symbolic Statements", "difficulty": 4, "passScore": 84, "defaultProfessorId": "euclid" },
+      { "day": 27, "lessonId": "PROOF-002", "topic": "Direct Proof Patterns — If A Then B, and Algebraic Manipulation Rules", "difficulty": 5, "passScore": 85, "defaultProfessorId": "euclid" },
+      { "day": 28, "lessonId": "PROOF-003", "topic": "Proof by Contradiction — Minimal Counterexamples and Why They Work", "difficulty": 6, "passScore": 86, "defaultProfessorId": "goldwasser" },
+      { "day": 29, "lessonId": "PROOF-004", "topic": "Adversarial Reasoning — Identifying Hidden Assumptions (Field vs Ring, Cancellation, Uniqueness)", "difficulty": 6, "passScore": 86, "defaultProfessorId": "nakamoto" },
+      { "day": 30, "lessonId": "PROOF-EX1", "topic": "Foundations Capstone — Mixed Problems and Attack-Style Counterexamples", "difficulty": 7, "passScore": 88, "defaultProfessorId": "nakamoto" }
+    ]
+  }

@@ -1,5 +1,7 @@
 # Run the first lesson
 
+The residency has a **pre-curriculum** (days 1–30, math foundations) that must be passed before the **main curriculum** (days 31–120, crypto). Same flow for both: generate lesson, homework, rubric; submit; grade; pass to advance. Day 1 is pre day 1; after passing day 30 you advance to day 31 (main day 1).
+
 To run **Day 001** (first lesson), use the orchestrator. It generates the lesson, homework, and rubric, then commits them to GitHub and updates residency state.
 
 ## 1. Prerequisites
@@ -73,8 +75,10 @@ After a successful run, status becomes `ASSIGNED`, so the orchestrator will do n
 |--------|----------------|
 | `npm run day:run` | Run one day: generate + commit (when NOT_STARTED). If failed grading exists for that day, generates new homework only (same lesson + rubric). |
 | `npm run grade -- <day> [file]` | Grade a submission for `<day>`; writes `grading.json`; on fail, updates state for retry. |
-| `npm run homework-specs:init` | Generate `curriculum/homework-specs.json` from `curriculum/curriculum.json` if missing. |
+| `npm run homework-specs:init` | Generate `curriculum/homework-specs.json` from main curriculum if missing. |
 | `npm run homework-specs:regen` | Regenerate `homework-specs.json` (with `--force`). |
+| `npm run pre-homework-specs:init` | Generate `curriculum/pre-homework-specs.json` from `curriculum/pre-curriculum.json` (required for pre-curriculum days 1–30). |
+| `npm run pre-homework-specs:regen` | Regenerate pre-homework-specs (with `--force`). |
 | `npm run build` | TypeScript compile. |
 | `npm run typecheck` | Type-check only. |
 

@@ -1,0 +1,1035 @@
+{
+  "curriculumId": "math-foundations-30d",
+  "version": "0.1.0",
+  "generatedAt": "2026-02-23T23:10:00.000Z",
+  "source": {
+    "path": "curriculum/math-foundations-30d.json",
+    "curriculumVersion": "1.0.0"
+  },
+  "days": [
+    {
+      "day": 1,
+      "lessonId": "ARITH-001",
+      "topic": "Integers, Divisibility, and Prime vs Composite",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 1,
+      "passScore": 80,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define core objects and notation for integers, divisibility, primes/composites, and gcd intuition." },
+        { "id": "O2", "category": "derivation", "text": "Prove basic divisibility claims (e.g., if a|b and a|c then a|(b±c)) with no skipped steps." },
+        { "id": "O3", "category": "computation", "text": "Compute prime factorizations and gcds; sanity-check by reconstruction." },
+        { "id": "O4", "category": "implementation", "text": "Implement gcd(a,b) with input normalization and edge cases." },
+        { "id": "O5", "category": "adversarial", "text": "Identify pitfalls (confusing prime vs coprime; factoring mistakes) and explain how to avoid them." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 75,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 80,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & clarity", "points": 50, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 18 },
+          { "id": "D3", "name": "Adversarial thinking & pitfalls", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 80 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 2,
+      "lessonId": "ARITH-002",
+      "topic": "Modular Arithmetic — Congruence and Wrap-Around Intuition",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 1,
+      "passScore": 80,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define congruence mod n, residue classes, and the meaning of a ≡ b (mod n)." },
+        { "id": "O2", "category": "derivation", "text": "Prove congruence compatibility with addition/multiplication: if a≡b and c≡d then a+c≡b+d and ac≡bd (mod n)." },
+        { "id": "O3", "category": "computation", "text": "Reduce expressions mod n and sanity-check using multiple representatives." },
+        { "id": "O4", "category": "implementation", "text": "Implement mod_add and mod_mul with normalization for negative inputs." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how incorrect normalization (negative residues / overflow assumptions) can break protocol logic." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 75,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 80,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & clarity", "points": 50, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 18 },
+          { "id": "D3", "name": "Adversarial thinking & pitfalls", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 80 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 3,
+      "lessonId": "ARITH-003",
+      "topic": "Prime Numbers — Factorization and Why Primes Matter",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 2,
+      "passScore": 80,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "State definitions: prime, composite, coprime, and unique factorization (informal statement acceptable)." },
+        { "id": "O2", "category": "derivation", "text": "Prove: if p is prime and p|ab then p|a or p|b (Euclid’s lemma) for small-scale reasoning." },
+        { "id": "O3", "category": "computation", "text": "Factor integers and use factors to compute gcd/lcm; sanity-check by multiplication." },
+        { "id": "O4", "category": "implementation", "text": "Implement is_prime(p) with correct edge cases and complexity awareness." },
+        { "id": "O5", "category": "adversarial", "text": "Explain why treating a composite as prime breaks modular inverses and cryptographic assumptions." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 90,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 80,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 27 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 21 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 80 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 4,
+      "lessonId": "ARITH-004",
+      "topic": "Greatest Common Divisor (gcd) and the Euclidean Algorithm",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 2,
+      "passScore": 80,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define gcd and relate gcd(a,n)=1 to invertibility mod n (preview)." },
+        { "id": "O2", "category": "derivation", "text": "Derive Euclidean Algorithm correctness: gcd(a,b)=gcd(b, a mod b)." },
+        { "id": "O3", "category": "computation", "text": "Compute gcds by hand with quotient/remainder table; sanity-check using common divisors." },
+        { "id": "O4", "category": "implementation", "text": "Implement gcd(a,b) iteratively with signed inputs, zero cases, and normalization." },
+        { "id": "O5", "category": "adversarial", "text": "Show how skipping gcd checks causes attempts to invert non-invertible elements." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 90,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 80,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 27 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 21 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 80 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 5,
+      "lessonId": "ARITH-005",
+      "topic": "Extended Euclidean Algorithm — Bezout Coefficients",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "State Bézout’s identity and interpret coefficients as a combination of a and b." },
+        { "id": "O2", "category": "derivation", "text": "Derive Extended Euclidean Algorithm from Euclid’s algorithm; justify the back-substitution." },
+        { "id": "O3", "category": "computation", "text": "Compute (g,x,y) with ax+by=g for multiple pairs; sanity-check by direct substitution." },
+        { "id": "O4", "category": "implementation", "text": "Implement egcd(a,b) returning (g,x,y) with correct behavior for negatives and zeros." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how sign/normalization bugs in egcd propagate to incorrect inverses." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 22 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 6,
+      "lessonId": "ARITH-006",
+      "topic": "Modular Inverses — When They Exist and How to Compute Them",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "State: a has an inverse mod n iff gcd(a,n)=1; define a^{-1} mod n." },
+        { "id": "O2", "category": "derivation", "text": "Derive modular inverse from Bézout: if ax+ny=1 then x≡a^{-1} (mod n)." },
+        { "id": "O3", "category": "computation", "text": "Compute inverses mod n (prime and composite cases); sanity-check by multiplication ≡1." },
+        { "id": "O4", "category": "implementation", "text": "Implement mod_inv(a,n) using egcd with proper error handling (non-invertible, a=0, n<=1)." },
+        { "id": "O5", "category": "adversarial", "text": "Give a concrete failure example where assuming invertibility breaks correctness/security." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 22 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 12 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 7,
+      "lessonId": "ARITH-EX1",
+      "topic": "Arithmetic & Modular Mastery Review",
+      "moduleId": "ARITH",
+      "moduleName": "Arithmetic & Modular Intuition",
+      "difficulty": 3,
+      "passScore": 84,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Restate key definitions: gcd, congruence, invertibility mod n, prime vs composite." },
+        { "id": "O2", "category": "derivation", "text": "Explain why gcd(a,n)=1 is necessary/sufficient for inverses, using Bézout." },
+        { "id": "O3", "category": "computation", "text": "Solve mixed modular arithmetic problems and validate by substitution checks." },
+        { "id": "O4", "category": "implementation", "text": "Deliver a small, tested modular arithmetic toolkit (add, mul, inv, is_prime) with unit tests." },
+        { "id": "O5", "category": "adversarial", "text": "Identify at least 3 common implementation pitfalls and propose mitigations/tests." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 4, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 84,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 29 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 35, "minimumPoints": 23 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 13 }
+        ],
+        "masteryGate": "PASS requires score >= 84 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+
+    {
+      "day": 8,
+      "lessonId": "STRUCT-001",
+      "topic": "Groups — Definition, Identity, Inverses, and Examples",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 2,
+      "passScore": 80,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define group axioms and recognize common examples (Z,+), (Z_n,+), (F_p^*,·)." },
+        { "id": "O2", "category": "derivation", "text": "Prove uniqueness of identity and inverses in a group." },
+        { "id": "O3", "category": "computation", "text": "Compute inverses and products in small groups; sanity-check by identity law." },
+        { "id": "O4", "category": "implementation", "text": "Implement a small Group interface and validate closure/identity/inverse for Z_n under addition." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how violating group assumptions breaks cryptographic reasoning (e.g., cancellation)." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 90,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 80,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 27 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 18 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 15 }
+        ],
+        "masteryGate": "PASS requires score >= 80 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 9,
+      "lessonId": "STRUCT-002",
+      "topic": "Cyclic Groups — Generators and Representation by Powers",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define cyclic group, generator, and notation ⟨g⟩." },
+        { "id": "O2", "category": "derivation", "text": "Prove: in a cyclic group of size n, every element is g^k; relate orders to n." },
+        { "id": "O3", "category": "computation", "text": "Find generators and list elements for small groups; sanity-check by coverage." },
+        { "id": "O4", "category": "implementation", "text": "Implement function to enumerate ⟨g⟩ in Z_p^* and detect if g is a generator." },
+        { "id": "O5", "category": "adversarial", "text": "Explain why using a non-generator (small subgroup) can enable attacks." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 15 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 10,
+      "lessonId": "STRUCT-003",
+      "topic": "Order of an Element — The Smallest k with g^k = 1",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define order of an element and relate to repetition/cycles." },
+        { "id": "O2", "category": "derivation", "text": "Prove: ord(g) is the smallest k>0 with g^k=1; show g^a=g^b implies a≡b (mod ord(g))." },
+        { "id": "O3", "category": "computation", "text": "Compute ord(g) in small groups; sanity-check by verifying g^k=1 and no smaller exponent works." },
+        { "id": "O4", "category": "implementation", "text": "Implement ord(g) by repeated multiplication with a safe cutoff; handle invalid g." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how small order elements break assumptions (e.g., easy discrete log / subgroup confinement)." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 15 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 11,
+      "lessonId": "STRUCT-004",
+      "topic": "Subgroups — Structure Inside Structure",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define subgroup and subgroup test; understand coset intuition (lightweight)." },
+        { "id": "O2", "category": "derivation", "text": "Prove subgroup test: nonempty H and closed under xy^{-1} implies H is a subgroup." },
+        { "id": "O3", "category": "computation", "text": "Identify subgroups in small groups; compute generated subgroups ⟨g⟩." },
+        { "id": "O4", "category": "implementation", "text": "Implement subgroup generation and membership tests for cyclic groups (by enumeration for small n)." },
+        { "id": "O5", "category": "adversarial", "text": "Explain subgroup-related vulnerabilities and how subgroup checks mitigate them." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 15 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 12,
+      "lessonId": "STRUCT-005",
+      "topic": "Lagrange’s Theorem (Operational Intuition) — Why Orders Divide Group Size",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 4,
+      "passScore": 84,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "State Lagrange’s theorem and interpret it for orders of elements and subgroup sizes." },
+        { "id": "O2", "category": "derivation", "text": "Give a proof sketch using cosets with clear steps (no heavy abstraction required, but must be coherent)." },
+        { "id": "O3", "category": "computation", "text": "Use Lagrange to bound/check possible orders; sanity-check by explicit computation in small cases." },
+        { "id": "O4", "category": "implementation", "text": "Implement a check that ord(g) divides |G| for enumerated finite groups; include assertions." },
+        { "id": "O5", "category": "adversarial", "text": "Explain why knowing factorization of group order matters for security parameters." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 84,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 50, "minimumPoints": 32 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 25, "minimumPoints": 16 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 16 }
+        ],
+        "masteryGate": "PASS requires score >= 84 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 13,
+      "lessonId": "STRUCT-006",
+      "topic": "Discrete Logarithm Intuition — One-Wayness in Groups",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 4,
+      "passScore": 84,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define discrete log problem (DLP) in cyclic groups and connect to exponentiation vs inversion." },
+        { "id": "O2", "category": "derivation", "text": "Explain why DLP is easy in small groups by brute force, and why large groups make it infeasible (reasoned argument)." },
+        { "id": "O3", "category": "computation", "text": "Solve tiny DLP instances by enumeration; sanity-check by forward exponentiation." },
+        { "id": "O4", "category": "implementation", "text": "Implement a brute-force dlog solver for small groups and measure complexity growth." },
+        { "id": "O5", "category": "adversarial", "text": "Describe what goes wrong if group size is too small or has small factors (subgroup attacks)." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 84,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & clarity", "points": 45, "minimumPoints": 29 },
+          { "id": "D2", "name": "Implementation correctness & experimentation", "points": 30, "minimumPoints": 19 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 16 }
+        ],
+        "masteryGate": "PASS requires score >= 84 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 14,
+      "lessonId": "STRUCT-EX1",
+      "topic": "Groups Mastery Review — Generators, Orders, and Subgroups",
+      "moduleId": "STRUCT",
+      "moduleName": "Algebraic Structures (Groups)",
+      "difficulty": 4,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Restate definitions (group, cyclic, generator, order, subgroup) accurately and succinctly." },
+        { "id": "O2", "category": "derivation", "text": "Provide a coherent explanation of Lagrange’s theorem and key consequences for element orders." },
+        { "id": "O3", "category": "computation", "text": "Solve mixed problems on generators/orders/subgroups with sanity checks by enumeration." },
+        { "id": "O4", "category": "implementation", "text": "Submit a small tested toolkit: enumerate group, compute ord, detect generator, brute-force dlog (small n)." },
+        { "id": "O5", "category": "adversarial", "text": "Analyze a small-subgroup failure mode and propose validation steps to prevent it." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 135,
+        "problemCounts": { "math": 4, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 30, "minimumPoints": 21 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 17 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+
+    {
+      "day": 15,
+      "lessonId": "FIELDS-001",
+      "topic": "Field vs Ring — Division Works Only in Fields",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 3,
+      "passScore": 82,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define ring (with 1) and field; explain 'division works' as 'every nonzero has an inverse'." },
+        { "id": "O2", "category": "derivation", "text": "Prove: fields have no zero divisors; show why that implies cancellation works for nonzero factors." },
+        { "id": "O3", "category": "computation", "text": "Determine whether Z/nZ is a field for sample n; provide explicit zero divisors when not." },
+        { "id": "O4", "category": "implementation", "text": "Implement is_field_mod_n(n) for the special case Z/nZ by checking primality (n prime ⇔ field)." },
+        { "id": "O5", "category": "adversarial", "text": "Describe a bug where code assumes cancellation in Z/nZ with composite n; give a concrete counterexample." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 105,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 82,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 15 }
+        ],
+        "masteryGate": "PASS requires score >= 82 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 16,
+      "lessonId": "FIELDS-002",
+      "topic": "Characteristic — What char(F)=p Means and Why p Must Be Prime",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 4,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define characteristic and interpret p·1=0 as repeated addition." },
+        { "id": "O2", "category": "derivation", "text": "Prove: if char(F)=n>0 then n is prime (use zero divisors + minimality argument)." },
+        { "id": "O3", "category": "computation", "text": "Compute characteristics for small example structures and sanity-check with repeated addition." },
+        { "id": "O4", "category": "implementation", "text": "Implement a small checker that simulates repeated addition in Z/pZ and confirms char=p." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how assuming 'char is composite' forces zero divisors and breaks field reasoning." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 50, "minimumPoints": 32 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 25, "minimumPoints": 16 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 16 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 17,
+      "lessonId": "FIELDS-003",
+      "topic": "Prime Subfield — How F_p Lives Inside Every Finite Field",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 4,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define prime subfield and the map k ↦ k·1; interpret it as embedding Z/pZ into F." },
+        { "id": "O2", "category": "derivation", "text": "Show the image of the integer map forms a subfield isomorphic to F_p." },
+        { "id": "O3", "category": "computation", "text": "Work examples: represent elements 0..p-1 inside a larger field model; sanity-check operations." },
+        { "id": "O4", "category": "implementation", "text": "Implement a 'prime subfield' wrapper for F_p arithmetic and ensure homomorphism properties in tests." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how mixing representations (ints vs field elements) can cause subtle bugs." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 50, "minimumPoints": 32 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 25, "minimumPoints": 16 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 16 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 18,
+      "lessonId": "FIELDS-004",
+      "topic": "Finite Fields Have Size p^n — Vector Space Counting Intuition",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 5,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Explain (intuitively and correctly) what it means for F to be a vector space over F_p." },
+        { "id": "O2", "category": "derivation", "text": "Derive |F|=p^n via vector space dimension counting with clear steps." },
+        { "id": "O3", "category": "computation", "text": "Given |F|, compute p and n; sanity-check by prime-power factorization." },
+        { "id": "O4", "category": "implementation", "text": "Implement a helper that checks if an integer q is a prime power and returns (p,n) or error." },
+        { "id": "O5", "category": "adversarial", "text": "Explain a failure mode when someone assumes a non-prime-power size can be a finite field." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 135,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 17 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 19,
+      "lessonId": "FIELDS-005",
+      "topic": "Field Extensions (Conceptual) — Why Larger Finite Fields Exist",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 5,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Explain field extensions conceptually: adjoining a root / building elements as polynomials mod an irreducible polynomial." },
+        { "id": "O2", "category": "derivation", "text": "Show how reducing polynomials mod an irreducible polynomial yields a field (high-level proof with clear logic)." },
+        { "id": "O3", "category": "computation", "text": "Work a tiny example: build F_{p^2} as F_p[x]/(f(x)) for a small p and irreducible f." },
+        { "id": "O4", "category": "implementation", "text": "Implement polynomial reduction mod f(x) and addition/multiplication in F_{p^2} for small p (toy model)." },
+        { "id": "O5", "category": "adversarial", "text": "Explain what breaks if f(x) is reducible (zero divisors appear), with a concrete counterexample." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 150,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 23 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 13 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 20,
+      "lessonId": "FIELDS-EX1",
+      "topic": "Finite Fields Mastery Review — Prime Powers, Inverses, and Failure Modes",
+      "moduleId": "FIELDS",
+      "moduleName": "Finite Fields Core",
+      "difficulty": 5,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Consolidate: field vs ring, characteristic, prime subfield, and |F|=p^n." },
+        { "id": "O2", "category": "derivation", "text": "Reproduce core proofs: char(F) prime; |F|=p^n, with coherent step-by-step reasoning." },
+        { "id": "O3", "category": "computation", "text": "Solve mixed finite field exercises including inverses and prime-power identification; sanity-check thoroughly." },
+        { "id": "O4", "category": "implementation", "text": "Submit a toy finite field toolkit (Fp + optional F_{p^2}) with tests and explicit error handling." },
+        { "id": "O5", "category": "adversarial", "text": "Analyze a composite-modulus 'field' bug and propose mitigations (validation + tests + API design)." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 165,
+        "problemCounts": { "math": 4, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 31 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 35, "minimumPoints": 24 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 14 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+
+    {
+      "day": 21,
+      "lessonId": "POLY-001",
+      "topic": "Polynomials Over Finite Fields — Arithmetic and Degree",
+      "moduleId": "POLY",
+      "moduleName": "Polynomials & Interpolation",
+      "difficulty": 5,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define polynomial over F_p, degree, coefficient arithmetic mod p." },
+        { "id": "O2", "category": "derivation", "text": "Show closure and degree properties under addition/multiplication (with careful caveats mod p)." },
+        { "id": "O3", "category": "computation", "text": "Add/multiply polynomials mod p; sanity-check by evaluation at random points." },
+        { "id": "O4", "category": "implementation", "text": "Implement poly_add and poly_mul over F_p with normalization of coefficients." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how coefficient reduction mistakes or degree mis-handling can break higher-level protocols." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 135,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 23 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 13 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 22,
+      "lessonId": "POLY-002",
+      "topic": "Polynomial Evaluation — Computing f(x) mod p",
+      "moduleId": "POLY",
+      "moduleName": "Polynomials & Interpolation",
+      "difficulty": 5,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Define evaluation map f ↦ f(a) and connect to substitution in finite fields." },
+        { "id": "O2", "category": "derivation", "text": "Derive Horner’s method and justify why it is correct and efficient." },
+        { "id": "O3", "category": "computation", "text": "Evaluate polynomials at points in F_p; sanity-check via naive expansion for small degrees." },
+        { "id": "O4", "category": "implementation", "text": "Implement poly_eval (Horner) with input validation and consistent mod reduction." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how evaluation bugs can cause incorrect shares/proofs and propose test vectors." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 135,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 35, "minimumPoints": 23 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 13 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 23,
+      "lessonId": "POLY-003",
+      "topic": "Lagrange Interpolation — Reconstructing from Points",
+      "moduleId": "POLY",
+      "moduleName": "Polynomials & Interpolation",
+      "difficulty": 6,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "State interpolation goal: unique polynomial of degree < t through t points with distinct x-values." },
+        { "id": "O2", "category": "derivation", "text": "Derive Lagrange basis polynomials and show why the sum reconstructs f(x)." },
+        { "id": "O3", "category": "computation", "text": "Interpolate a polynomial over F_p from given points; sanity-check by re-evaluating at all points." },
+        { "id": "O4", "category": "implementation", "text": "Implement lagrange_interpolate(points, p) with checks for duplicate x and non-invertible denominators." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how duplicate x-values or wrong field modulus breaks interpolation (division by zero / non-invertible)." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 150,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 45, "minimumPoints": 31 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 35, "minimumPoints": 24 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 14 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 24,
+      "lessonId": "POLY-004",
+      "topic": "Secret Sharing Intuition — Threshold Reconstruction via Interpolation",
+      "moduleId": "POLY",
+      "moduleName": "Polynomials & Interpolation",
+      "difficulty": 6,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Explain Shamir secret sharing: secret as f(0), shares as (i, f(i)), threshold t." },
+        { "id": "O2", "category": "derivation", "text": "Derive reconstruction of the secret via Lagrange interpolation at x=0." },
+        { "id": "O3", "category": "computation", "text": "Reconstruct a secret from t shares and show fewer than t shares are insufficient (demonstrate ambiguity)." },
+        { "id": "O4", "category": "implementation", "text": "Implement shamir_split(secret,t,n,p) and shamir_recover(shares,p) (toy, non-crypto RNG allowed for learning)." },
+        { "id": "O5", "category": "adversarial", "text": "Identify pitfalls: non-prime modulus, reuse of coefficients, weak randomness, share index collisions." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 150,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 40, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & edge cases", "points": 40, "minimumPoints": 28 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 14 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 25,
+      "lessonId": "POLY-EX1",
+      "topic": "Polynomials Mastery Review — Evaluate, Interpolate, and Sanity-Check",
+      "moduleId": "POLY",
+      "moduleName": "Polynomials & Interpolation",
+      "difficulty": 6,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Consolidate polynomial arithmetic, evaluation, and interpolation conditions over F_p." },
+        { "id": "O2", "category": "derivation", "text": "Re-derive Lagrange interpolation and explain uniqueness of the reconstructed polynomial (degree bound + distinct x)." },
+        { "id": "O3", "category": "computation", "text": "Solve mixed tasks: evaluate, interpolate, recover secrets; sanity-check by re-evaluation and invariants." },
+        { "id": "O4", "category": "implementation", "text": "Submit a tested polynomial toolkit: add/mul/eval/interpolate + optional Shamir demo." },
+        { "id": "O5", "category": "adversarial", "text": "Provide an attack-style analysis of a flawed Shamir setup and propose mitigations." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 165,
+        "problemCounts": { "math": 4, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 40, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 40, "minimumPoints": 28 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 20, "minimumPoints": 14 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+
+    {
+      "day": 26,
+      "lessonId": "PROOF-001",
+      "topic": "Proof Literacy — Definitions, Theorems, and How to Read Symbolic Statements",
+      "moduleId": "PROOF",
+      "moduleName": "Proof Thinking & Adversarial Reasoning",
+      "difficulty": 4,
+      "passScore": 84,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Distinguish definition vs theorem vs lemma; parse quantifiers (for all, exists) in plain English." },
+        { "id": "O2", "category": "derivation", "text": "Rewrite symbolic statements into precise English and back; show equivalences (e.g., contrapositive)." },
+        { "id": "O3", "category": "computation", "text": "Work small proof-reading tasks: identify missing assumptions, invalid steps, and correct them." },
+        { "id": "O4", "category": "implementation", "text": "Implement a minimal property-based test set for a math function (e.g., mod_inv) translating statements into tests." },
+        { "id": "O5", "category": "adversarial", "text": "Explain how ambiguous definitions lead to security bugs and how to tighten specs." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 120,
+        "problemCounts": { "math": 2, "implementation": 1, "adversarial": 2 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 84,
+        "dimensions": [
+          { "id": "D1", "name": "Logical correctness & communication", "points": 45, "minimumPoints": 29 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 25, "minimumPoints": 16 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 30, "minimumPoints": 19 }
+        ],
+        "masteryGate": "PASS requires score >= 84 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 27,
+      "lessonId": "PROOF-002",
+      "topic": "Direct Proof Patterns — If A Then B, and Algebraic Manipulation Rules",
+      "moduleId": "PROOF",
+      "moduleName": "Proof Thinking & Adversarial Reasoning",
+      "difficulty": 5,
+      "passScore": 85,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Identify proof structure: assumptions, goal, allowed transformations, conclusion." },
+        { "id": "O2", "category": "derivation", "text": "Write direct proofs for basic algebraic statements in modular arithmetic and groups with explicit steps." },
+        { "id": "O3", "category": "computation", "text": "Solve small formal reasoning exercises and validate by counterexample search when unsure." },
+        { "id": "O4", "category": "implementation", "text": "Implement a checker/test harness that validates group axioms for a given operation on a finite set (toy size)." },
+        { "id": "O5", "category": "adversarial", "text": "Name common invalid steps (dividing by 0, canceling zero divisors) and show concrete counterexamples." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 135,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 85,
+        "dimensions": [
+          { "id": "D1", "name": "Logical & mathematical correctness", "points": 45, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 30, "minimumPoints": 20 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 17 }
+        ],
+        "masteryGate": "PASS requires score >= 85 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 28,
+      "lessonId": "PROOF-003",
+      "topic": "Proof by Contradiction — Minimal Counterexamples and Why They Work",
+      "moduleId": "PROOF",
+      "moduleName": "Proof Thinking & Adversarial Reasoning",
+      "difficulty": 6,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Explain proof by contradiction and contrapositive; know when each is appropriate." },
+        { "id": "O2", "category": "derivation", "text": "Use contradiction to prove at least two claims relevant to the curriculum (e.g., char(F) prime; no zero divisors in a field)." },
+        { "id": "O3", "category": "computation", "text": "Construct counterexamples to false claims; sanity-check by explicit computation." },
+        { "id": "O4", "category": "implementation", "text": "Implement a small counterexample searcher for modular identities (brute force for tiny n) to validate/disprove statements." },
+        { "id": "O5", "category": "adversarial", "text": "Translate 'find a counterexample' into a security mindset: break assumptions with minimal inputs." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 150,
+        "problemCounts": { "math": 3, "implementation": 1, "adversarial": 1 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Logical & mathematical rigor", "points": 45, "minimumPoints": 31 },
+          { "id": "D2", "name": "Implementation correctness & experimentation", "points": 30, "minimumPoints": 21 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 17 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 29,
+      "lessonId": "PROOF-004",
+      "topic": "Adversarial Reasoning — Identifying Hidden Assumptions (Field vs Ring, Cancellation, Uniqueness)",
+      "moduleId": "PROOF",
+      "moduleName": "Proof Thinking & Adversarial Reasoning",
+      "difficulty": 6,
+      "passScore": 86,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "List common hidden assumptions in algebraic proofs (invertibility, nonzero divisors, domain restrictions)." },
+        { "id": "O2", "category": "derivation", "text": "Given a proof outline, explicitly annotate assumptions at each step; justify why each is needed." },
+        { "id": "O3", "category": "computation", "text": "Provide explicit counterexamples when assumptions are removed (composite modulus, a=0, repeated x-values)." },
+        { "id": "O4", "category": "implementation", "text": "Design an API contract for modular/field operations that enforces assumptions via types/validation and tests." },
+        { "id": "O5", "category": "adversarial", "text": "Write a short 'attack note' showing a concrete failure mode from assumption drift and a mitigation checklist." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 150,
+        "problemCounts": { "math": 2, "implementation": 1, "adversarial": 2 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 86,
+        "dimensions": [
+          { "id": "D1", "name": "Logical & mathematical rigor", "points": 40, "minimumPoints": 28 },
+          { "id": "D2", "name": "Implementation correctness & spec quality", "points": 30, "minimumPoints": 21 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 30, "minimumPoints": 21 }
+        ],
+        "masteryGate": "PASS requires score >= 86 AND each rubric dimension score >= its minimumPoints."
+      }
+    },
+    {
+      "day": 30,
+      "lessonId": "PROOF-EX1",
+      "topic": "Foundations Capstone — Mixed Problems and Attack-Style Counterexamples",
+      "moduleId": "PROOF",
+      "moduleName": "Proof Thinking & Adversarial Reasoning",
+      "difficulty": 7,
+      "passScore": 88,
+      "objectives": [
+        { "id": "O1", "category": "concept", "text": "Demonstrate mastery of core concepts across the bootcamp (mod arithmetic, groups, fields, polynomials, proofs)." },
+        { "id": "O2", "category": "derivation", "text": "Complete at least two full derivations/proofs from the program with no skipped steps and correct assumptions." },
+        { "id": "O3", "category": "computation", "text": "Solve mixed computational exercises and provide robust sanity checks." },
+        { "id": "O4", "category": "implementation", "text": "Submit a coherent, tested mini-library implementing core operations (Fp ops, inverses, group utils, poly eval/interp)." },
+        { "id": "O5", "category": "adversarial", "text": "Deliver an adversarial analysis report: 3 assumption failures + counterexamples + mitigations/tests." }
+      ],
+      "constraints": {
+        "timeboxMinutes": 180,
+        "problemCounts": { "math": 4, "implementation": 1, "adversarial": 2 },
+        "allowedLanguages": ["TypeScript", "Python"],
+        "allowedResources": ["The generated lesson for this day", "Your own notes"],
+        "disallowedResources": ["Copying published solutions", "Using an LLM to write the solution"],
+        "responseFormat": { "requireMarkdown": true, "requireLatex": true, "requireCodeFences": true }
+      },
+      "rubric": {
+        "totalPoints": 100,
+        "passingScore": 88,
+        "dimensions": [
+          { "id": "D1", "name": "Mathematical correctness & rigor", "points": 40, "minimumPoints": 30 },
+          { "id": "D2", "name": "Implementation correctness & testing", "points": 35, "minimumPoints": 26 },
+          { "id": "D3", "name": "Adversarial analysis & mitigations", "points": 25, "minimumPoints": 18 }
+        ],
+        "masteryGate": "PASS requires score >= 88 AND each rubric dimension score >= its minimumPoints."
+      }
+    }
+  ]
+}
