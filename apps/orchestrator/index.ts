@@ -33,7 +33,7 @@ async function generateSummary(
       "for the residency log in Markdown. Be factual and professional.",
     userPrompt: `Day ${day} lesson generated on topic "${topic}" by Professor ${professor}. ` +
       `Committed to GitHub: ${commitUrl}. Status: ASSIGNED.`,
-    temperature: 0.3,
+    temperature: 1,
     maxTokens: 200,
     taskType: "summary",
   });

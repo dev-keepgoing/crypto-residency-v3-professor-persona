@@ -2,8 +2,17 @@
   "currentDay": 1,
   "currentLessonId": "FF-001",
   "attempt": 1,
-  "status": "NOT_STARTED",
+  "status": "ASSIGNED",
   "professor": "euclid",
-  "lastCommitSha": null,
-  "history": []
+  "lastCommitSha": "a057bd110266b354ad138c428c5a877ee70cb7e5",
+  "history": [
+    {
+      "day": 1,
+      "lessonId": "ARITH-001",
+      "attempt": 1,
+      "status": "ASSIGNED",
+      "commitSha": "a057bd110266b354ad138c428c5a877ee70cb7e5",
+      "timestamp": "2026-02-24T00:27:17.742Z"
+    }
+  ]
 }

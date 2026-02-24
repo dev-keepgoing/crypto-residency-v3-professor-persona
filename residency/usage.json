@@ -88,5 +88,59 @@
       "outputCostUSD": 0.010164,
       "totalCostUSD": 0.010999
     }
+  },
+  {
+    "timestamp": "2026-02-24T00:26:45.613Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 589,
+      "cachedTokens": 0,
+      "completionTokens": 2002,
+      "totalTokens": 2591
+    },
+    "cost": {
+      "inputCostUSD": 0.001031,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.028028,
+      "totalCostUSD": 0.029059
+    }
+  },
+  {
+    "timestamp": "2026-02-24T00:27:02.568Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 831,
+      "cachedTokens": 0,
+      "completionTokens": 1216,
+      "totalTokens": 2047
+    },
+    "cost": {
+      "inputCostUSD": 0.001454,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.017024,
+      "totalCostUSD": 0.018478
+    }
+  },
+  {
+    "timestamp": "2026-02-24T00:27:15.174Z",
+    "taskType": "lesson",
+    "logicalModel": "gpt-5.2",
+    "apiModel": "gpt-5.2",
+    "usage": {
+      "promptTokens": 494,
+      "cachedTokens": 0,
+      "completionTokens": 746,
+      "totalTokens": 1240
+    },
+    "cost": {
+      "inputCostUSD": 0.000865,
+      "cachedInputCostUSD": 0,
+      "outputCostUSD": 0.010444,
+      "totalCostUSD": 0.011309
+    }
   }
 ]

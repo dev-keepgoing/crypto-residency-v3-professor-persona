@@ -14,6 +14,9 @@
 | 3 | 2026-02-23 12:26:02 UTC | lesson | gpt-5.2 | gpt-5.2 | 608 | 0 | 2,586 | 3,194 | $0.037268 |
 | 4 | 2026-02-23 12:26:21 UTC | lesson | gpt-5.2 | gpt-5.2 | 778 | 0 | 1,202 | 1,980 | $0.018190 |
 | 5 | 2026-02-23 12:26:35 UTC | lesson | gpt-5.2 | gpt-5.2 | 477 | 0 | 726 | 1,203 | $0.010999 |
+| 6 | 2026-02-24 00:26:45 UTC | lesson | gpt-5.2 | gpt-5.2 | 589 | 0 | 2,002 | 2,591 | $0.029059 |
+| 7 | 2026-02-24 00:27:02 UTC | lesson | gpt-5.2 | gpt-5.2 | 831 | 0 | 1,216 | 2,047 | $0.018478 |
+| 8 | 2026-02-24 00:27:15 UTC | lesson | gpt-5.2 | gpt-5.2 | 494 | 0 | 746 | 1,240 | $0.011309 |
 
 ---
 
@@ -21,15 +24,15 @@
 
 | Metric | Value |
 |--------|-------|
-| Total API calls | 5 |
-| Total prompt tokens | 3,242 |
+| Total API calls | 8 |
+| Total prompt tokens | 5,156 |
 | Total cached tokens | 0 |
-| Total completion tokens | 8,230 |
-| **Total tokens** | **11,472** |
-| Input cost | $0.005674 |
+| Total completion tokens | 12,194 |
+| **Total tokens** | **17,350** |
+| Input cost | $0.009024 |
 | Cached input cost | $0.000000 |
-| Output cost | $0.115220 |
-| **Total cost** | **$0.120894** |
+| Output cost | $0.170716 |
+| **Total cost** | **$0.179740** |
 
 ---
 
@@ -37,4 +40,4 @@
 
 | Logical Model | Calls | Total Tokens | Input Cost | Cached Cost | Output Cost | Total Cost |
 |---------------|-------|--------------|------------|-------------|-------------|------------|
-| gpt-5.2 | 5 | 11,472 | $0.005674 | $0.000000 | $0.115220 | $0.120894 |
+| gpt-5.2 | 8 | 17,350 | $0.009024 | $0.000000 | $0.170716 | $0.179740 |
