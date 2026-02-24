@@ -27,64 +27,74 @@
 }
 ```
 
-## Formal Explanation
+# Day 001 — Divisibility, Primes vs Coprime, and `gcd`
 
-### Core objects and notation (O1)
-- **Integers**: ℤ = {..., −2, −1, 0, 1, 2, ...}.
-- **Divisibility**: for integers \(a,b\), with \(a\neq 0\),
-  - \(a \mid b \iff \exists k\in\mathbb{Z}\) such that \(b = ak\).
-- **Prime**: integer \(p>1\) with exactly two positive divisors: 1 and \(p\).
-- **Composite**: integer \(n>1\) that is not prime (i.e., \(n=ab\) with \(1<a<n\), \(1<b<n\)).
-- **Coprime**: integers \(a,b\) are coprime if \(\gcd(a,b)=1\). (They need not be prime.)
-- **gcd intuition**: \(\gcd(a,b)\) is the “largest shared divisor”; it controls invertibility mod \(n\): \(a\) has an inverse mod \(n\) iff \(\gcd(a,n)=1\).
+## Why we care (crypto connection)
+A lot of cryptography works “mod n” (remainders). A key fact is:
 
-### Computation goals (O3)
-- **Prime factorization**: write \(n>1\) as \(n=\prod p_i^{e_i}\).
-- **gcd from factorization**: if
-  - \(a=\prod p^{\alpha_p}\), \(b=\prod p^{\beta_p}\),
-  - then \(\gcd(a,b)=\prod p^{\min(\alpha_p,\beta_p)}\).
+> A number `a` has a multiplicative inverse mod `n` **iff** `gcd(a, n) = 1`.
 
----
+So if we confuse **prime** with **coprime**, we can accidentally accept values that *don’t have inverses*, breaking protocols.
 
-## Derivation
+## Learning goals
+By the end, you can:
+- State what **“a divides b”** means using an exact definition.
+- Explain **prime vs composite vs coprime** (they are different ideas).
+- Compute `gcd(a, b)` using **Euclid’s algorithm**.
+- Implement `normalizeInt(x)` and `gcd(a, b)` with correct edge-case behavior.
 
-### Divisibility closure (O2)
-Proposition: If \(a\mid b\) and \(a\mid c\), then \(a\mid (b+c)\) and \(a\mid (b-c)\).
+## Core ideas (plain English)
+### 1) Divisibility is an “exists a multiple” statement
+“`a` divides `b`” means “`b` is some integer multiple of `a`”.
 
-- Assume \(a\mid b\). Then \(\exists k\in\mathbb{Z}\) with \(b=ak\).
-- Assume \(a\mid c\). Then \(\exists \ell\in\mathbb{Z}\) with \(c=a\ell\).
-- Add:
-  - \(b+c = ak + a\ell = a(k+\ell)\).
-  - Since \(k+\ell\in\mathbb{Z}\), by definition \(a\mid (b+c)\).
-- Subtract:
-  - \(b-c = ak - a\ell = a(k-\ell)\).
-  - Since \(k-\ell\in\mathbb{Z}\), by definition \(a\mid (b-c)\).
+### 2) Prime/composite describe one number; coprime describes two numbers
+- **Prime**: a number with no nontrivial factorization.
+- **Composite**: a number that *does* factor nontrivially.
+- **Coprime**: a *pair* of numbers that share no factor > 1.
 
-Corollary (useful): If \(a\mid b\), then \(a\mid tb\) for any \(t\in\mathbb{Z}\).
-- \(b=ak \Rightarrow tb = a(tk)\), and \(tk\in\mathbb{Z}\).
+### 3) `gcd` tells you when inverses exist mod `n`
+If `gcd(a, n) = 1`, then `a` is invertible mod `n`. If `gcd(a, n) ≠ 1`, then it isn’t.
 
-### Euclid’s algorithm invariant (O4 core idea)
-Claim: For integers \(a,b\) with \(b\neq 0\),
-\[
-\gcd(a,b)=\gcd(b, a\bmod b).
-\]
+## Definitions (precise but readable)
+We work with integers: `ℤ = {..., -2, -1, 0, 1, 2, ...}`.
 
-- Let \(r = a \bmod b\). Then by division algorithm: \(a = qb + r\) for some \(q\in\mathbb{Z}\), with \(0\le r<|b|\).
-- If \(d\mid a\) and \(d\mid b\), then \(d\mid (a-qb)=r\). So any common divisor of \((a,b)\) is a common divisor of \((b,r)\).
-- If \(d\mid b\) and \(d\mid r\), then \(d\mid (qb+r)=a\). So any common divisor of \((b,r)\) is a common divisor of \((a,b)\).
-- Therefore the sets of common divisors match, hence the greatest positive one matches.
+- **Divides**: for integers `a, b` with `a ≠ 0`, `a | b` means: there exists an integer `k` such that `b = a*k`.
+- **Prime**: an integer `p > 1` whose only positive divisors are `1` and `p`.
+- **Composite**: an integer `n > 1` that is not prime (so `n = a*b` with `1 < a < n` and `1 < b < n`).
+- **Greatest common divisor**: `gcd(a, b)` is the greatest **positive** integer `d` such that `d | a` and `d | b`.
+- **Coprime**: integers `a, b` are coprime if `gcd(a, b) = 1`.
 
----
+## Proof skill: a tiny “closure” fact about divisibility
+### Proposition
+If `a | b` and `a | c`, then `a | (b + c)` and `a | (b - c)`.
 
-## Implementation Lab
+### Proof (no skipped steps)
+- `a | b` means: there exists an integer `k` with `b = a*k`.
+- `a | c` means: there exists an integer `ℓ` with `c = a*ℓ`.
+- Add: `b + c = a*k + a*ℓ = a*(k + ℓ)`. Since `k + ℓ` is an integer, `a | (b + c)`.
+- Subtract: `b - c = a*k - a*ℓ = a*(k - ℓ)`. Since `k - ℓ` is an integer, `a | (b - c)`.
 
-### Task (O4): Implement `gcd(a,b)` with normalization and edge cases
-Requirements:
-- Accept any integers (including negatives).
-- Return a **nonnegative** gcd.
-- Define behavior for \(\gcd(0,0)\) explicitly.
+### Useful corollary
+If `a | b`, then `a | (t*b)` for any integer `t`.
 
-#### Reference pseudocode
+## Computing `gcd`: Euclid’s algorithm
+### The idea (one sentence)
+`gcd(a, b)` doesn’t change if you replace `a` by the remainder when dividing `a` by `b`.
+
+### Key step (the invariant)
+For `b ≠ 0`: `gcd(a, b) = gcd(b, a mod b)`.
+
+## Implementation lab
+You will implement:
+- `normalizeInt(x)` → returns `|x|` (the nonnegative magnitude)
+- `gcd(a, b)` → nonnegative gcd, handles negatives and zeros, defines `gcd(0,0)`
+
+### Required behavior
+- Accept any integers, including negative numbers.
+- Always return a **nonnegative** gcd.
+- Define and document what you do for `gcd(0,0)` (common convention: return `0`).
+
+### Reference pseudocode
 ```text
 normalizeInt(x):
   if x < 0: return -x
@@ -95,7 +105,7 @@ gcd(a, b):
   b = normalizeInt(b)
 
   if a == 0 and b == 0:
-    return 0   # convention; document it
+    return 0  # convention; document it
   if b == 0:
     return a
 
@@ -104,44 +114,28 @@ gcd(a, b):
   return a
 ```
 
-#### Quick tests (must pass)
+### Quick tests (must pass)
 - `gcd(54, 24) = 6`
 - `gcd(-54, 24) = 6`
-- `gcd(0, 7) = 7`, `gcd(7, 0) = 7`
-- `gcd(0, 0) = 0` (by chosen convention)
+- `gcd(0, 7) = 7` and `gcd(7, 0) = 7`
+- `gcd(0, 0) = 0` (by convention)
 
-### Math exercises (O3) — 3 problems
-1) **Factorization + reconstruction**  
-   Compute the prime factorization of \(840\). Then multiply factors to reconstruct \(840\).
+## Security pitfall (prime vs coprime confusion)
+Correct rule:
 
-2) **gcd via factorization**  
-   Let \(a=360\), \(b=840\). Compute \(\gcd(a,b)\) using prime factorizations and the \(\min\) exponent rule. Sanity-check by verifying the gcd divides both.
+> `a` has an inverse mod `n` **iff** `gcd(a, n) = 1`.
 
-3) **Divisibility proof drill**  
-   Prove: if \(a\mid b\) and \(b\mid c\), then \(a\mid c\). (Use only the definition \(x\mid y \iff \exists k: y=xk\).)
+Common mistake:
 
----
+> “If some `a` is coprime to `n`, then `n` must be prime.”
 
-## Adversarial Thinking Challenge
+That’s false: composite numbers can still have many values coprime to them.
 
-### Scenario (O5) — 1 challenge
-A protocol designer says: “Pick a **prime** number \(p\). Then any nonzero \(a<p\) is **coprime** to \(p\), so it has an inverse mod \(p\). Therefore, if \(a\) is coprime to \(n\), \(n\) must be prime.”
-
-- Identify the logical error precisely.
-- Provide a counterexample where \(a\) is coprime to \(n\) but \(n\) is composite.
-- Explain the safe rule you should use instead (state it in one sentence).
-
-Pitfalls to watch:
-- Confusing “\(n\) is prime” with “some \(a\) is coprime to \(n\)”.
-- Assuming “coprime” implies “prime”.
-
----
-
-## Mastery Requirements
-
-To pass (target ≥ 80%):
-- **Concept (O1)**: Correctly state definitions of \(a\mid b\), prime, composite, gcd, coprime; distinguish prime vs coprime.
-- **Derivation (O2)**: Produce a complete, step-by-step proof of the closure property \(a\mid b, a\mid c \Rightarrow a\mid (b\pm c)\) (no skipped existential steps).
-- **Computation (O3)**: Correct prime factorization for given integers; compute gcd and verify by division/reconstruction.
-- **Implementation (O4)**: Working `gcd(a,b)` with normalization; handles negatives, zeros, and documents \(\gcd(0,0)\).
-- **Adversarial (O5)**: Clearly articulate the prime-vs-coprime pitfall and give a valid counterexample and corrected rule.
+## Mastery checklist (target ≥ 80%)
+You can:
+- State definitions: divides, prime, composite, gcd, coprime.
+- Explain prime vs coprime clearly (one is about one number, the other about a pair).
+- Prove: `a|b` and `a|c` ⇒ `a|(b±c)` using the “there exists k” definition.
+- Compute gcd using Euclid and verify it divides both numbers.
+- Implement `gcd(a,b)` robustly (negatives, zeros, and `gcd(0,0)` documented).
+- Spot and correct the prime-vs-coprime logical error in a protocol argument.
